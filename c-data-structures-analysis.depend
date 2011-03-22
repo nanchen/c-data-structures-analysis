@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1300800973 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/aatree.c
+1300801891 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/aatree.c
 	"aatree.h"
 	<stdlib.h>
 	"fatal.h"
@@ -8,39 +8,40 @@
 	<stdlib.h>
 	"fatal.h"
 
-839878059 /home/nan/chen-work/c-data-structures-analysis/ds-lib/fatal.h
+1300801891 /home/nan/chen-work/c-data-structures-analysis/ds-lib/fatal.h
 	<stdio.h>
 	<stdlib.h>
 
-1300801154 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/list.c
+1300801892 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/list.c
 	"list.h"
 	<stdlib.h>
 	"fatal.h"
 
 1300801155 /home/nan/chen-work/c-data-structures-analysis/ds-lib/list.h
 
-1300801270 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.c
+1300801892 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.c
 	"queue.h"
 	"fatal.h"
 	<stdlib.h>
 
 1300801270 /home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.h
 
-1300800973 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testaa.c
+1300801595 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testaa.c
 	"aatree.h"
 	<stdio.h>
 
-1300801155 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
+1300818893 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
 	<stdio.h>
 	"list.h"
+	"resourcetrack.h"
 
-1300801261 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.c
+1300801570 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.c
 	<stdio.h>
 	"queue.h"
 
 1299696535 source:/home/nan/chen-work/c-data-structures-analysis/main.c
 
-1300801403 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
+1300822977 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<sys/times.h>
@@ -53,17 +54,18 @@
 
 1300801570 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.h
 
-1300801372 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
+1300818363 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
 
-1300801372 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
+1300828592 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
 	<stdlib.h>
 	<math.h>
 	"fatal.h"
 	"sort.h"
+	"resourcetrack.h"
 
-1300795870 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/tree.c
+1300818212 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/tree.c
 	<stdlib.h>
-	"resource-track.h"
+	"resourcetrack.h"
 	"tree.h"
 	"fatal.h"
 
@@ -77,30 +79,37 @@
 
 1300795912 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resource-track.h
 
-1300798839 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.c
+1300801891 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.c
 	"avltree.h"
 	<stdlib.h>
 	"fatal.h"
 
 1300798839 /home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.h
 
-1300799704 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.c
+1300801891 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.c
 	"binheap.h"
 	"fatal.h"
 	<stdlib.h>
 
 1300799704 /home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.h
 
-1300799497 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
+1300801849 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
 	"avltree.h"
 	<stdio.h>
 
-1300795938 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.c
+1300821306 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.c
 	<stdio.h>
 	"tree.h"
-	"resource-track.h"
+	"resourcetrack.h"
 
 1300801484 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testheap.c
 	"binheap.h"
 	<stdio.h>
+
+1300828718 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
+	<stdio.h>
+	<math.h>
+	"resourcetrack.h"
+
+1300824594 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.h
 

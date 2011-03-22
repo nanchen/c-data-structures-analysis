@@ -48,6 +48,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/aatree.h" />
+		<Unit filename="ds-lib/avltree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/avltree.h" />
+		<Unit filename="ds-lib/binheap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/binheap.h" />
 		<Unit filename="ds-lib/fatal.h" />
 		<Unit filename="ds-lib/list.c">
 			<Option compilerVar="CC" />
@@ -57,6 +65,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/queue.h" />
+		<Unit filename="ds-lib/resource-track.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/resource-track.h" />
 		<Unit filename="ds-lib/sort.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -65,6 +77,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testaa.h" />
+		<Unit filename="ds-lib/testavl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testheap.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="ds-lib/testlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -73,6 +91,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testque.h" />
+		<Unit filename="ds-lib/testtree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testtree.h" />
+		<Unit filename="ds-lib/tree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/tree.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

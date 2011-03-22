@@ -1,6 +1,6 @@
         #include <stdlib.h>
 
-        #include "resource-track.h"
+        #include "resourcetrack.h"
         #include "tree.h"
         #include "fatal.h"
 

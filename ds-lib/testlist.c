@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "list.h"
+#include "resourcetrack.h"
 
 void PrintList(const List L) {
 	Position P = List_header(L);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "tree.h"
-#include "resource-track.h"
+#include "resourcetrack.h"
 
 Tree_test() {
     const int NUM_OF_NODES = 50;
@@ -12,9 +12,7 @@ Tree_test() {
 
 	T = Tree_makeEmpty(NULL);
 	for (i = 0; i < NUM_OF_NODES; i++, j = (j + 7) % NUM_OF_NODES){
-		totalTime = 0;
 		T = Tree_insert(j, T);
-		Resource_print();
 	}
 	for (i = 0; i < NUM_OF_NODES; i++)
 		if ((P = Tree_find(i, T)) == NULL || Tree_retrieve(P) != i)

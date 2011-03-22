@@ -2,45 +2,47 @@
 
 #include <stdlib.h>
 #include <math.h>
+
 #include "fatal.h"
-
 #include "sort.h"
+#include "resourcetrack.h"
 
-void printArray(ElementType a[], int n){
-    int i;
-    for(i=0;i<n;i++){
-        printf(", a[%d]=%d",i,a[i]);
-    }
-    printf("\n");
+//------------------------radix sort--------------------------------------
+void printArray(ElementType a[], int n) {
+	int i;
+	for (i = 0; i < n; i++) {
+		printf(", a[%d]=%d", i, a[i]);
+	}
+	printf("\n");
 }
 
 int getBit(ElementType element, int bit) {
-    int divider = pow(10, bit);
-    int mod = pow(10, bit+1);
-    int reminder = element % mod;
+	int divider = pow(10, bit);
+	int mod = pow(10, bit + 1);
+	int reminder = element % mod;
 	int ret = reminder / divider;
 	return ret;
 }
 
 int partition(ElementType a[], int bit, int left, int right) {
-    int leftBit, rightBit;
-    //FIXME! remove the hard coding
-//    printArray(a,10);
+	int leftBit, rightBit;
+	//FIXME! remove the hard coding
+	//    printArray(a,10);
 	while (left != right) {
-		while ( (leftBit = getBit(a[left], bit))  == 0 && left < right)
+		while ((leftBit = getBit(a[left], bit)) == 0 && left < right)
 			left++;
-		while ( (rightBit = getBit(a[right],bit)) == 1 && left < right)
+		while ((rightBit = getBit(a[right], bit)) == 1 && left < right)
 			right--;
 		// swap left & right
 		int tmp = a[left];
 		a[left] = a[right];
 		a[right] = tmp;
-	    printArray(a,10);
+		printArray(a, 10);
 	}
 	rightBit = getBit(a[right], bit);
-	if ( rightBit == 0)
+	if (rightBit == 0)
 		right++;
-//    printArray(a,10);
+	//    printArray(a,10);
 	return right;
 }
 
@@ -50,29 +52,35 @@ void radixExchangeSort(ElementType a[], int bit, int left, int right) {
 		int range = split - 1 - left + 1;
 		if (range > 1)
 			radixExchangeSort(a, bit - 1, left, split - 1);
-        range = right - split + 1;
+		range = right - split + 1;
 		if (range > 1)
 			radixExchangeSort(a, bit - 1, split, right);
 	}
 }
+//------------------------radix sort--------------------------------------
 
 void Swap(ElementType *Lhs, ElementType *Rhs) {
 	ElementType Tmp = *Lhs;
 	*Lhs = *Rhs;
 	*Rhs = Tmp;
+	Resource_logTime(7);
 }
 
 /* START: fig7_2.txt */
 void insertionSort(ElementType A[], int N) {
+    Resource_logSpace(N);
 	int j, P;
 	ElementType Tmp;
 
-	/* 1*/for (P = 1; P < N; P++) {
-		/* 2*/Tmp = A[P];
-		/* 3*/
-		for (j = P; j > 0 && A[j - 1] > Tmp; j--)
-			/* 4*/A[j] = A[j - 1];
-		/* 5*/A[j] = Tmp;
+	for (P = 1; P < N; P++) {
+		Tmp = A[P];
+		Resource_logTime(3);
+		for (j = P; j > 0 && A[j - 1] > Tmp; j--){
+			A[j] = A[j - 1];
+			Resource_logTime(7); // 5 steps in for loop, 2 steps of retriving data from array & assign
+		}
+		A[j] = Tmp;
+		Resource_logTime(1);
 	}
 }
 /* END */
@@ -104,29 +112,42 @@ void PercDown(ElementType A[], int i, int N) {
 	int Child;
 	ElementType Tmp;
 
-	/* 1*/
 	for (Tmp = A[i]; LeftChild( i ) < N; i = Child) {
-		/* 2*/Child = LeftChild( i );
-		/* 3*/
-		if (Child != N - 1 && A[Child + 1] > A[Child])
-			/* 4*/Child++;
-		/* 5*/if (Tmp < A[Child])
-			/* 6*/A[i] = A[Child];
+		Resource_logTime(3);
+
+		Child = LeftChild( i );
+		Resource_logTime(3);
+
+		Resource_logTime(7);
+		if (Child != N - 1 && A[Child + 1] > A[Child]){
+            Child++;
+            Resource_logTime(1);
+		}
+
+		Resource_logTime(2);
+		if (Tmp < A[Child]){
+			A[i] = A[Child];
+			Resource_logTime(2);
+		}
 		else
-			/* 7*/break;
+			break;
 	}
-	/* 8*/A[i] = Tmp;
+	A[i] = Tmp;
+	Resource_logTime(1);
 }
 
 void heapsort(ElementType A[], int N) {
 	int i;
+    Resource_logSpace(N);
 
-	/* 1*/
-	for (i = N / 2; i >= 0; i--) /* BuildHeap */
-		/* 2*/PercDown(A, i, N);
-	/* 3*/for (i = N - 1; i > 0; i--) {
-		/* 4*/Swap(&A[0], &A[i]); /* DeleteMax */
-		/* 5*/PercDown(A, 0, i);
+	for (i = N / 2; i >= 0; i--){ /* BuildHeap */
+	    Resource_logTime(2);
+		PercDown(A, i, N);
+	}
+	for (i = N - 1; i > 0; i--) {
+		Resource_logTime(2);
+		Swap(&A[0], &A[i]); /* DeleteMax */
+		PercDown(A, 0, i);
 	}
 }
 /* END */
@@ -179,8 +200,7 @@ void mergesort(ElementType A[], int N) {
 	if (TmpArray != NULL) {
 		MSort(A, TmpArray, 0, N - 1);
 		free(TmpArray);
-	}
-		else
+	} else
 		fatalError( "No space for tmp array!!!" );
 }
 /* END */
@@ -326,20 +346,49 @@ void Copy(ElementType Lhs[], const ElementType Rhs[], int N) {
 		Lhs[i] = Rhs[i];
 }
 
+void reverseCopy(ElementType lhs[], const ElementType rhs[], int n){
+    int i;
+	for (i = 0; i < n; i++)
+		lhs[i] = rhs[n-i-1];
+
+}
+
 #define MaxSize 7000
 int Arr1[MaxSize];
 int Arr2[MaxSize];
+int arr3[MaxSize];
 
 void Sort_test() {
-	int i;
+//	int i;
 
 	// test radix exchange sort
-	printf("test radix exchange sort\n");
-	int array[10] = { 10, 111, 110, 101, 111, 11, 110, 101, 0, 111 };
-	printArray(array,10);
-	radixExchangeSort(array, 2, 0, 9);
+	//	printf("test radix exchange sort\n");
+	//	int array[10] = { 10, 111, 110, 101, 111, 11, 110, 101, 0, 111 };
+	//	printArray(array,10);
+	//	radixExchangeSort(array, 2, 0, 9);
+
+	Permute(Arr2, MaxSize);
+	Copy(Arr1, Arr2, MaxSize);
+	Resource_startTrack("insertion sort");
+	insertionSort(Arr1, MaxSize);
+	Resource_analyse(MaxSize);
+
+	Resource_startTrack("insertion sort (best case)");
+	insertionSort(Arr1, MaxSize);
+	Resource_analyse(MaxSize);
+
+	reverseCopy(arr3, Arr1, MaxSize);
+	Resource_startTrack("insertion sort (worst case)");
+	insertionSort(arr3, MaxSize);
+	Resource_analyse(MaxSize);
+
+    Copy(Arr1, Arr2, MaxSize);
+	Resource_startTrack("heap sort");
+	heapsort(Arr1, MaxSize);
+	Resource_analyse(MaxSize);
 
 
+/*
 	for (i = 0; i < 10; i++) {
 		Permute(Arr2, MaxSize);
 		Copy(Arr1, Arr2, MaxSize);
@@ -359,18 +408,17 @@ void Sort_test() {
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
-
-		quicksort(array, 10);
 		quicksort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
 		Qselect(Arr1, MaxSize / 2 + 1 + i, 0, MaxSize - 1);
 		if (Arr1[MaxSize / 2 + i] != MaxSize / 2 + i)
-			printf("Select error: %d %d\n", MaxSize / 2 + i, Arr1[MaxSize / 2
-					+ i]);
+			printf("Select error: %d %d\n", MaxSize / 2 + i,
+					Arr1[MaxSize / 2 + i]);
 		else
 			printf("Select works\n");
 	}
+*/
 }
 
