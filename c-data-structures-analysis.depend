@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1299104640 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/aatree.c
+	"aatree.h"
+	<stdlib.h>
+	"fatal.h"
+
+1299104640 /home/nan/chen-work/c-data-structures-analysis/ds-lib/aatree.h
+	<stdlib.h>
+	"fatal.h"
+
+839878059 /home/nan/chen-work/c-data-structures-analysis/ds-lib/fatal.h
+	<stdio.h>
+	<stdlib.h>
+
+1299105475 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/list.c
+	"list.h"
+	<stdlib.h>
+	"fatal.h"
+
+1299105495 /home/nan/chen-work/c-data-structures-analysis/ds-lib/list.h
+
+1299698005 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.c
+	"queue.h"
+	"fatal.h"
+	<stdlib.h>
+
+1299700472 /home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.h
+
+1299104747 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testaa.c
+	"aatree.h"
+	<stdio.h>
+
+1299105668 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
+	<stdio.h>
+	"list.h"
+
+1299698473 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.c
+	<stdio.h>
+	"queue.h"
+
+1299696535 source:/home/nan/chen-work/c-data-structures-analysis/main.c
+
+1300794492 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
+	<stdio.h>
+	<stdlib.h>
+	<sys/times.h>
+	"../ds-lib/testlist.h"
+	"../ds-lib/testque.h"
+	"../ds-lib/testtree.h"
+	"../ds-lib/sort.h"
+
+1299105677 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.h
+
+1299698424 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.h
+
+1299887704 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
+
+1300024287 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
+	<stdlib.h>
+	<math.h>
+	"fatal.h"
+	"sort.h"
+
+1300795870 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/tree.c
+	<stdlib.h>
+	"resource-track.h"
+	"tree.h"
+	"fatal.h"
+
+1300023487 /home/nan/chen-work/c-data-structures-analysis/ds-lib/tree.h
+
+1300794663 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.h
+
+1300795613 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resource-track.c
+	<stdio.h>
+	"resource-track.h"
+
+1300795912 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resource-track.h
+
