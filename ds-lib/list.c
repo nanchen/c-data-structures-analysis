@@ -10,13 +10,13 @@
         };
 
         List
-        List_MakeEmpty( List L )
+        List_makeEmpty( List L )
         {
             if( L != NULL )
-                List_DeleteList( L );
+                List_deleteList( L );
             L = malloc( sizeof( struct Node ) );
             if( L == NULL )
-                FatalError( "Out of memory!" );
+                fatalError( "Out of memory!" );
             L->Next = NULL;
             return L;
         }
@@ -25,7 +25,7 @@
         /* Return true if L is empty */
 
         int
-        List_IsEmpty( List L )
+        List_isEmpty( List L )
         {
             return L->Next == NULL;
         }
@@ -35,7 +35,7 @@
         /* Return true if P is the last position in list L */
         /* Parameter L is unused in this implementation */
 
-        int List_IsLast( Position P, List L )
+        int List_isLast( Position P, List L )
         {
             return P->Next == NULL;
         }
@@ -45,7 +45,7 @@
         /* Return Position of X in L; NULL if not found */
 
         Position
-        List_Find( ElementType X, List L )
+        List_find( ElementType X, List L )
         {
             Position P;
 
@@ -58,19 +58,19 @@
 /* END */
 
 /* START: fig3_11.txt */
-        /* List_Delete from a list */
+        /* List_delete from a list */
         /* Cell pointed to by P->Next is wiped out */
         /* Assume that the position is legal */
         /* Assume use of a header node */
 
         void
-        List_Delete( ElementType X, List L )
+        List_delete( ElementType X, List L )
         {
             Position P, TmpCell;
 
-            P = List_FindPrevious( X, L );
+            P = List_findPrevious( X, L );
 
-            if( !List_IsLast( P, L ) )  /* Assumption of header use */
+            if( !List_isLast( P, L ) )  /* Assumption of header use */
             {                      /* X is found; delete it */
                 TmpCell = P->Next;
                 P->Next = TmpCell->Next;  /* Bypass deleted cell */
@@ -84,7 +84,7 @@
         /* Assumes a header */
 
         Position
-        List_FindPrevious( ElementType X, List L )
+        List_findPrevious( ElementType X, List L )
         {
             Position P;
 
@@ -97,18 +97,18 @@
 /* END */
 
 /* START: fig3_13.txt */
-        /* List_Insert (after legal position P) */
-        /* List_Header implementation assumed */
+        /* List_insert (after legal position P) */
+        /* List_header implementation assumed */
         /* Parameter L is unused in this implementation */
 
         void
-        List_Insert( ElementType X, List L, Position P )
+        List_insert( ElementType X, List L, Position P )
         {
             Position TmpCell;
 
 /* 1*/      TmpCell = malloc( sizeof( struct Node ) );
 /* 2*/      if( TmpCell == NULL )
-/* 3*/          FatalError( "Out of space!!!" );
+/* 3*/          fatalError( "Out of space!!!" );
 
 /* 4*/      TmpCell->Element = X;
 /* 5*/      TmpCell->Next = P->Next;
@@ -118,14 +118,14 @@
 
 #if 0
 /* START: fig3_14.txt */
-        /* Incorrect List_DeleteList algorithm */
+        /* Incorrect List_deleteList algorithm */
 
         void
-        List_DeleteList( List L )
+        List_deleteList( List L )
         {
             Position P;
 
-/* 1*/      P = L->Next;  /* List_Header assumed */
+/* 1*/      P = L->Next;  /* List_header assumed */
 /* 2*/      L->Next = NULL;
 /* 3*/      while( P != NULL )
             {
@@ -137,14 +137,14 @@
 #endif
 
 /* START: fig3_15.txt */
-        /* Correct List_DeleteList algorithm */
+        /* Correct List_deleteList algorithm */
 
         void
-        List_DeleteList( List L )
+        List_deleteList( List L )
         {
             Position P, Tmp;
 
-/* 1*/      P = L->Next;  /* List_Header assumed */
+/* 1*/      P = L->Next;  /* List_header assumed */
 /* 2*/      L->Next = NULL;
 /* 3*/      while( P != NULL )
             {
@@ -156,25 +156,25 @@
 /* END */
 
         Position
-        List_Header( List L )
+        List_header( List L )
         {
             return L;
         }
 
         Position
-        List_First( List L )
+        List_first( List L )
         {
             return L->Next;
         }
 
         Position
-        List_Advance( Position P )
+        List_advance( Position P )
         {
             return P->Next;
         }
 
         ElementType
-        List_Retrieve( Position P )
+        List_retrieve( Position P )
         {
             return P->Element;
         }

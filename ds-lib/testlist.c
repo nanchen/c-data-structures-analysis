@@ -2,45 +2,45 @@
 #include "list.h"
 
 void PrintList(const List L) {
-	Position P = List_Header(L);
+	Position P = List_header(L);
 
-	if (List_IsEmpty(L))
+	if (List_isEmpty(L))
 		printf("Empty list\n");
 	else {
 		do {
-			P = List_Advance(P);
-			printf("%d ", List_Retrieve(P));
-		} while (!List_IsLast(P, L));
+			P = List_advance(P);
+			printf("%d ", List_retrieve(P));
+		} while (!List_isLast(P, L));
 		printf("\n");
 	}
 }
 
-int List_Test(void) {
+int List_test(void) {
 	List L;
 	Position P;
 	int i;
 
-	L = List_MakeEmpty(NULL);
-	P = List_Header(L);
+	L = List_makeEmpty(NULL);
+	P = List_header(L);
 	PrintList(L);
 
 	for (i = 0; i < 10; i++) {
-		List_Insert(i, L, P);
+		List_insert(i, L, P);
 		PrintList(L);
-		P = List_Advance(P);
+		P = List_advance(P);
 	}
 	for (i = 0; i < 10; i += 2)
-		List_Delete(i, L);
+		List_delete(i, L);
 
 	for (i = 0; i < 10; i++)
-		if ((i % 2 == 0) == (List_Find(i, L) != NULL))
+		if ((i % 2 == 0) == (List_find(i, L) != NULL))
 			printf("Find fails\n");
 
 	printf("Finished deletions\n");
 
 	PrintList(L);
 
-	List_DeleteList(L);
+	List_deleteList(L);
 
 	return 0;
 }

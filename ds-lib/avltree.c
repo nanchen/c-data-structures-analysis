@@ -157,7 +157,7 @@
                 /* Create and return a one-node tree */
                 T = malloc( sizeof( struct AvlNode ) );
                 if( T == NULL )
-                    FatalError( "Out of space!!!" );
+                    fatalError( "Out of space!!!" );
                 else
                 {
                     T->Element = X; T->Height = 0;

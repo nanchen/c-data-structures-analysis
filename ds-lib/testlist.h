@@ -8,6 +8,6 @@
 #ifndef TESTLIST_H_
 #define TESTLIST_H_
 
-int List_Test(void);
+int List_test(void);
 
 #endif /* TESTLIST_H_ */

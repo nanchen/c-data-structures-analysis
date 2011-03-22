@@ -77,7 +77,7 @@
 /* 2*/          T = malloc( sizeof( struct TreeNode ) );
                 Resource_logTime(2);
 /* 3*/          if( T == NULL )
-/* 4*/              FatalError( "Out of space!!!" );
+/* 4*/              fatalError( "Out of space!!!" );
                 else
                 {
 /* 5*/              T->Element = X;
@@ -104,7 +104,7 @@
             Position TmpCell;
 
             if( T == NULL )
-                Error( "Element not found" );
+                error( "Element not found" );
             else
             if( X < T->Element )  /* Go left */
                 T->Left = Tree_delete( X, T->Left );

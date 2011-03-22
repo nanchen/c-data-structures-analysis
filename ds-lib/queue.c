@@ -15,42 +15,42 @@
 
 /* START: fig3_58.txt */
         int
-        Queue_IsEmpty( Queue Q )
+        Queue_isEmpty( Queue Q )
         {
             return Q->Size == 0;
         }
 /* END */
 
         int
-        Queue_IsFull( Queue Q )
+        Queue_isFull( Queue Q )
         {
             return Q->Size == Q->Capacity;
         }
 
         Queue
-        Queue_CreateQueue( int MaxElements )
+        Queue_createQueue( int MaxElements )
         {
             Queue Q;
 
 /* 1*/      if( MaxElements < MinQueueSize )
-/* 2*/          Error( "Queue size is too small" );
+/* 2*/          error( "Queue size is too small" );
 
 /* 3*/      Q = malloc( sizeof( struct QueueRecord ) );
 /* 4*/      if( Q == NULL )
-/* 5*/          FatalError( "Out of space!!!" );
+/* 5*/          fatalError( "Out of space!!!" );
 
 /* 6*/      Q->Array = malloc( sizeof( ElementType ) * MaxElements );
 /* 7*/      if( Q->Array == NULL )
-/* 8*/          FatalError( "Out of space!!!" );
+/* 8*/          fatalError( "Out of space!!!" );
 /* 9*/      Q->Capacity = MaxElements;
-/*10*/      Queue_MakeEmpty( Q );
+/*10*/      Queue_makeEmpty( Q );
 
 /*11*/      return Q;
         }
 
 /* START: fig3_59.txt */
         void
-        Queue_MakeEmpty( Queue Q )
+        Queue_makeEmpty( Queue Q )
         {
             Q->Size = 0;
             Q->Front = 1;
@@ -59,7 +59,7 @@
 /* END */
 
         void
-        Queue_DisposeQueue( Queue Q )
+        Queue_disposeQueue( Queue Q )
         {
             if( Q != NULL )
             {
@@ -79,10 +79,10 @@
         }
 
         void
-        Queue_Enqueue( ElementType X, Queue Q )
+        Queue_enqueue( ElementType X, Queue Q )
         {
-            if( Queue_IsFull( Q ) )
-                Error( "Full queue" );
+            if( Queue_isFull( Q ) )
+                error( "Full queue" );
             else
             {
                 Q->Size++;
@@ -95,19 +95,19 @@
 
 
         ElementType
-        Queue_Front( Queue Q )
+        Queue_front( Queue Q )
         {
-            if( !Queue_IsEmpty( Q ) )
+            if( !Queue_isEmpty( Q ) )
                 return Q->Array[ Q->Front ];
-            Error( "Empty queue" );
+            error( "Empty queue" );
             return 0;  /* Return value used to avoid warning */
         }
 
         void
-        Queue_Dequeue( Queue Q )
+        Queue_dequeue( Queue Q )
         {
-            if( Queue_IsEmpty( Q ) )
-                Error( "Empty queue" );
+            if( Queue_isEmpty( Q ) )
+                error( "Empty queue" );
             else
             {
                 Q->Size--;
@@ -116,12 +116,12 @@
         }
 
         ElementType
-        Queue_FrontAndDequeue( Queue Q )
+        Queue_frontAndDequeue( Queue Q )
         {
             ElementType X = 0;
 
-            if( Queue_IsEmpty( Q ) )
-                Error( "Empty queue" );
+            if( Queue_isEmpty( Q ) )
+                error( "Empty queue" );
             else
             {
                 Q->Size--;

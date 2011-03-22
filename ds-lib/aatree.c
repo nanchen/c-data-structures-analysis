@@ -15,13 +15,13 @@
         };
 
         AATree
-        AATree_Initialize( void )
+        AATree_initialize( void )
         {
             if( NullNode == NULL )
             {
                 NullNode = malloc( sizeof( struct AANode ) );
                 if( NullNode == NULL )
-                    FatalError( "Out of space!!!" );
+                    fatalError( "Out of space!!!" );
                 NullNode->Left = NullNode->Right = NullNode;
                 NullNode->Level = 0;
             }
@@ -30,33 +30,33 @@
 /* END */
 
         AATree
-        AATree_MakeEmpty( AATree T )
+        AATree_makeEmpty( AATree T )
         {
             if( T != NullNode )
             {
-                AATree_MakeEmpty( T->Left );
-                AATree_MakeEmpty( T->Right );
+                AATree_makeEmpty( T->Left );
+                AATree_makeEmpty( T->Right );
                 free( T );
             }
             return NullNode;
         }
 
         Position
-        AATree_Find( ElementType X, AATree T )
+        AATree_find( ElementType X, AATree T )
         {
             if( T == NullNode )
                 return NullNode;
             if( X < T->Element )
-                return AATree_Find( X, T->Left );
+                return AATree_find( X, T->Left );
             else
             if( X > T->Element )
-                return AATree_Find( X, T->Right );
+                return AATree_find( X, T->Right );
             else
                 return T;
         }
 
         Position
-        AATree_FindMin( AATree T )
+        AATree_findMin( AATree T )
         {
             if( T == NullNode )
                 return NullNode;
@@ -64,11 +64,11 @@
             if( T->Left == NullNode )
                 return T;
             else
-                return AATree_FindMin( T->Left );
+                return AATree_findMin( T->Left );
         }
 
         Position
-        AATree_FindMax( AATree T )
+        AATree_findMax( AATree T )
         {
             if( T != NullNode )
                 while( T->Right != NullNode )
@@ -141,14 +141,14 @@
 
 /* START: fig12_36.txt */
         AATree
-        AATree_Insert( ElementType Item, AATree T )
+        AATree_insert( ElementType Item, AATree T )
         {
             if( T == NullNode )
             {
                 /* Create and return a one-node tree */
                 T = malloc( sizeof( struct AANode ) );
                 if( T == NULL )
-                    FatalError( "Out of space!!!" );
+                    fatalError( "Out of space!!!" );
                 else
                 {
                     T->Element = Item; T->Level = 1;
@@ -157,10 +157,10 @@
             }
             else
             if( Item < T->Element )
-                T->Left = AATree_Insert( Item, T->Left );
+                T->Left = AATree_insert( Item, T->Left );
             else
             if( Item > T->Element )
-                T->Right = AATree_Insert( Item, T->Right );
+                T->Right = AATree_insert( Item, T->Right );
 
             /* Otherwise it's a duplicate; do nothing */
 
@@ -172,7 +172,7 @@
 
 /* START: fig12_38.txt */
         AATree
-        AATree_Remove( ElementType Item, AATree T )
+        AATree_remove( ElementType Item, AATree T )
         {
             static Position DeletePtr, LastPtr;
 
@@ -182,11 +182,11 @@
                 /*         set LastPtr and DeletePtr */
                 LastPtr = T;
                 if( Item < T->Element )
-                    T->Left = AATree_Remove( Item, T->Left );
+                    T->Left = AATree_remove( Item, T->Left );
                 else
                 {
                     DeletePtr = T;
-                    T->Right = AATree_Remove( Item, T->Right );
+                    T->Right = AATree_remove( Item, T->Right );
                 }
 
                 /* Step 2: If at the bottom of the tree and */
@@ -223,7 +223,7 @@
 /* END */
 
         ElementType
-        AATree_Retrieve( Position P )
+        AATree_retrieve( Position P )
         {
             return P->Element;
         }

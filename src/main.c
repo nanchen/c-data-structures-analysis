@@ -56,13 +56,13 @@ int main(void) {
 	Tree_test();
 
 	printf("-----------------Test List-------------------\n");
-	List_Test();
+	List_test();
 
 	printf("-----------------Test Queue------------------\n");
-	Queue_Test();
+	Queue_test();
 
 	printf("-----------------Test Sorting------------------\n");
-	Sort_Test();
+	Sort_test();
 //	for( i = 0; i < 500000; i++ )
 //		value = 5000*8000;
 	sleep(1);

@@ -20,10 +20,10 @@ AVLTree_test()
 
     for( i = 1; i < 50; i += 2 )
         if( ( P = AVLTree_find( i, T ) ) == NULL || AVLTree_retrieve( P ) != i )
-            printf( "Error at %d\n", i );
+            printf( "error at %d\n", i );
     for( i = 0; i < 50; i += 2 )
         if( ( P = AVLTree_find( i, T ) ) != NULL )
-            printf( "Error at %d\n", i );
+            printf( "error at %d\n", i );
 */
     printf( "Min is %d, Max is %d\n", AVLTree_retrieve( AVLTree_findMin( T ) ),
                AVLTree_retrieve( AVLTree_findMax( T ) ) );

@@ -63,7 +63,7 @@ void Swap(ElementType *Lhs, ElementType *Rhs) {
 }
 
 /* START: fig7_2.txt */
-void InsertionSort(ElementType A[], int N) {
+void insertionSort(ElementType A[], int N) {
 	int j, P;
 	ElementType Tmp;
 
@@ -78,7 +78,7 @@ void InsertionSort(ElementType A[], int N) {
 /* END */
 
 /* START: fig7_4.txt */
-void Shellsort(ElementType A[], int N) {
+void shellsort(ElementType A[], int N) {
 	int i, j, Increment;
 	ElementType Tmp;
 
@@ -118,7 +118,7 @@ void PercDown(ElementType A[], int i, int N) {
 	/* 8*/A[i] = Tmp;
 }
 
-void Heapsort(ElementType A[], int N) {
+void heapsort(ElementType A[], int N) {
 	int i;
 
 	/* 1*/
@@ -172,7 +172,7 @@ void MSort(ElementType A[], ElementType TmpArray[], int Left, int Right) {
 	}
 }
 
-void Mergesort(ElementType A[], int N) {
+void mergesort(ElementType A[], int N) {
 	ElementType *TmpArray;
 
 	TmpArray = malloc(N * sizeof(ElementType));
@@ -181,7 +181,7 @@ void Mergesort(ElementType A[], int N) {
 		free(TmpArray);
 	}
 		else
-		FatalError( "No space for tmp array!!!" );
+		fatalError( "No space for tmp array!!!" );
 }
 /* END */
 
@@ -238,7 +238,7 @@ void Qsort(ElementType A[], int Left, int Right) {
 		/*12*/Qsort(A, i + 1, Right);
 	} else
 		/* Do an insertion sort on the subarray */
-		/*13*/InsertionSort(A + Left, Right - Left + 1);
+		/*13*/insertionSort(A + Left, Right - Left + 1);
 }
 /* END */
 
@@ -259,7 +259,7 @@ void Qsort(ElementType A[], int Left, int Right) {
 #endif
 
 /* START: fig7_12.txt */
-void Quicksort(ElementType A[], int N) {
+void quicksort(ElementType A[], int N) {
 	Qsort(A, 0, N - 1);
 }
 /* END */
@@ -297,7 +297,7 @@ void Qselect(ElementType A[], int k, int Left, int Right) {
 			/*14*/Qselect(A, k, i + 1, Right);
 	} else
 		/* Do an insertion sort on the subarray */
-		/*15*/InsertionSort(A + Left, Right - Left + 1);
+		/*15*/insertionSort(A + Left, Right - Left + 1);
 }
 /* END */
 
@@ -330,7 +330,7 @@ void Copy(ElementType Lhs[], const ElementType Rhs[], int N) {
 int Arr1[MaxSize];
 int Arr2[MaxSize];
 
-void Sort_Test() {
+void Sort_test() {
 	int i;
 
 	// test radix exchange sort
@@ -343,25 +343,25 @@ void Sort_Test() {
 	for (i = 0; i < 10; i++) {
 		Permute(Arr2, MaxSize);
 		Copy(Arr1, Arr2, MaxSize);
-		InsertionSort(Arr1, MaxSize);
+		insertionSort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
-		Shellsort(Arr1, MaxSize);
+		shellsort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
-		Heapsort(Arr1, MaxSize);
+		heapsort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
-		Mergesort(Arr1, MaxSize);
+		mergesort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);
 
-		Quicksort(array, 10);
-		Quicksort(Arr1, MaxSize);
+		quicksort(array, 10);
+		quicksort(Arr1, MaxSize);
 		Checksort(Arr1, MaxSize);
 
 		Copy(Arr1, Arr2, MaxSize);

@@ -19,17 +19,17 @@
             PriorityQueue H;
 
 /* 1*/      if( MaxElements < MinPQSize )
-/* 2*/          Error( "Priority queue size is too small" );
+/* 2*/          error( "Priority queue size is too small" );
 
 /* 3*/      H = malloc( sizeof( struct HeapStruct ) );
 /* 4*/      if( H ==NULL )
-/* 5*/          FatalError( "Out of space!!!" );
+/* 5*/          fatalError( "Out of space!!!" );
 
             /* Allocate the array plus one extra for sentinel */
 /* 6*/      H->Elements = malloc( ( MaxElements + 1 )
                                     * sizeof( ElementType ) );
 /* 7*/      if( H->Elements == NULL )
-/* 8*/          FatalError( "Out of space!!!" );
+/* 8*/          fatalError( "Out of space!!!" );
 
 /* 9*/      H->Capacity = MaxElements;
 /*10*/      H->Size = 0;
@@ -55,7 +55,7 @@
 
             if( BinaryHeap_isFull( H ) )
             {
-                Error( "Priority queue is full" );
+                error( "Priority queue is full" );
                 return;
             }
 
@@ -74,7 +74,7 @@
 
 /* 1*/      if( BinaryHeap_isEmpty( H ) )
             {
-/* 2*/          Error( "Priority queue is empty" );
+/* 2*/          error( "Priority queue is empty" );
 /* 3*/          return H->Elements[ 0 ];
             }
 /* 4*/      MinElement = H->Elements[ 1 ];
@@ -104,7 +104,7 @@
         {
             if( !BinaryHeap_isEmpty( H ) )
                 return H->Elements[ 1 ];
-            Error( "Priority Queue is Empty" );
+            error( "Priority Queue is Empty" );
             return H->Elements[ 0 ];
         }
 

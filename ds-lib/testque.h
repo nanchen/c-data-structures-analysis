@@ -8,6 +8,6 @@
 #ifndef TESTQUE_H_
 #define TESTQUE_H_
 
-int Queue_Test(void);
+int Queue_test(void);
 
 #endif /* TESTQUE_H_ */

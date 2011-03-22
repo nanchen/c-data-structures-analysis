@@ -8,6 +8,6 @@
 #ifndef TESTAA_H_
 #define TESTAA_H_
 
-int AATree_Test(void);
+int AATree_test(void);
 
 #endif /* TESTAA_H_ */
