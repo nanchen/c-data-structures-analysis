@@ -17,7 +17,7 @@
 #include "../ds-lib/sort.h"
 
 int main(void) {
-	int i;
+//	int i;
 
 /*
 	int value;

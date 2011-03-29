@@ -5,8 +5,8 @@
         /* Place in the interface file */
         struct Node
         {
-            ElementType Element;
-            Position    Next;
+            ListElement Element;
+            ListPosition    Next;
         };
 
         List
@@ -35,19 +35,19 @@
         /* Return true if P is the last position in list L */
         /* Parameter L is unused in this implementation */
 
-        int List_isLast( Position P, List L )
+        int List_isLast( ListPosition P, List L )
         {
             return P->Next == NULL;
         }
 /* END */
 
 /* START: fig3_10.txt */
-        /* Return Position of X in L; NULL if not found */
+        /* Return ListPosition of X in L; NULL if not found */
 
-        Position
-        List_find( ElementType X, List L )
+        ListPosition
+        List_find( ListElement X, List L )
         {
-            Position P;
+            ListPosition P;
 
 /* 1*/      P = L->Next;
 /* 2*/      while( P != NULL && P->Element != X )
@@ -64,9 +64,9 @@
         /* Assume use of a header node */
 
         void
-        List_delete( ElementType X, List L )
+        List_delete( ListElement X, List L )
         {
-            Position P, TmpCell;
+            ListPosition P, TmpCell;
 
             P = List_findPrevious( X, L );
 
@@ -83,10 +83,10 @@
         /* If X is not found, then Next field of returned value is NULL */
         /* Assumes a header */
 
-        Position
-        List_findPrevious( ElementType X, List L )
+        ListPosition
+        List_findPrevious( ListElement X, List L )
         {
-            Position P;
+            ListPosition P;
 
 /* 1*/      P = L;
 /* 2*/      while( P->Next != NULL && P->Next->Element != X )
@@ -102,9 +102,9 @@
         /* Parameter L is unused in this implementation */
 
         void
-        List_insert( ElementType X, List L, Position P )
+        List_insert( ListElement X, List L, ListPosition P )
         {
-            Position TmpCell;
+            ListPosition TmpCell;
 
 /* 1*/      TmpCell = malloc( sizeof( struct Node ) );
 /* 2*/      if( TmpCell == NULL )
@@ -123,7 +123,7 @@
         void
         List_deleteList( List L )
         {
-            Position P;
+            ListPosition P;
 
 /* 1*/      P = L->Next;  /* List_header assumed */
 /* 2*/      L->Next = NULL;
@@ -142,7 +142,7 @@
         void
         List_deleteList( List L )
         {
-            Position P, Tmp;
+            ListPosition P, Tmp;
 
 /* 1*/      P = L->Next;  /* List_header assumed */
 /* 2*/      L->Next = NULL;
@@ -155,26 +155,26 @@
         }
 /* END */
 
-        Position
+        ListPosition
         List_header( List L )
         {
             return L;
         }
 
-        Position
+        ListPosition
         List_first( List L )
         {
             return L->Next;
         }
 
-        Position
-        List_advance( Position P )
+        ListPosition
+        List_advance( ListPosition P )
         {
             return P->Next;
         }
 
-        ElementType
-        List_retrieve( Position P )
+        ListElement
+        List_retrieve( ListPosition P )
         {
             return P->Element;
         }

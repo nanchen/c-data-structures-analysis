@@ -12,12 +12,12 @@
 	<stdio.h>
 	<stdlib.h>
 
-1300801892 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/list.c
+1301429915 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/list.c
 	"list.h"
 	<stdlib.h>
 	"fatal.h"
 
-1300801155 /home/nan/chen-work/c-data-structures-analysis/ds-lib/list.h
+1301429915 /home/nan/chen-work/c-data-structures-analysis/ds-lib/list.h
 
 1300801892 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/queue.c
 	"queue.h"
@@ -30,7 +30,7 @@
 	"aatree.h"
 	<stdio.h>
 
-1300818893 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
+1301429915 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
 	<stdio.h>
 	"list.h"
 	"resourcetrack.h"
@@ -41,7 +41,7 @@
 
 1299696535 source:/home/nan/chen-work/c-data-structures-analysis/main.c
 
-1300822977 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
+1301357621 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<sys/times.h>
@@ -56,7 +56,7 @@
 
 1300818363 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
 
-1300828592 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
+1301437164 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
 	<stdlib.h>
 	<math.h>
 	"fatal.h"
@@ -71,7 +71,7 @@
 
 1300023487 /home/nan/chen-work/c-data-structures-analysis/ds-lib/tree.h
 
-1300794663 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.h
+1301357609 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.h
 
 1300795613 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resource-track.c
 	<stdio.h>
@@ -106,10 +106,24 @@
 	"binheap.h"
 	<stdio.h>
 
-1300828718 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
+1301436992 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
 	<stdio.h>
 	<math.h>
+	<string.h>
 	"resourcetrack.h"
 
-1300824594 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.h
+1301431857 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.h
+	"list.h"
+
+1301430230 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.c
+	"fatal.h"
+	"hashsep.h"
+	<stdlib.h>
+
+1301416460 /home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.h
+
+1301430157 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testhash.c
+	"hashsep.h"
+	"hashquad.h"
+	<stdio.h>
 

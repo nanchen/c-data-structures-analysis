@@ -1,5 +1,4 @@
 /* This file contains a collection of sorting routines */
-
 #include <stdlib.h>
 #include <math.h>
 
@@ -359,7 +358,7 @@ int Arr2[MaxSize];
 int arr3[MaxSize];
 
 void Sort_test() {
-//	int i;
+	int i;
 
 	// test radix exchange sort
 	//	printf("test radix exchange sort\n");
@@ -368,24 +367,29 @@ void Sort_test() {
 	//	radixExchangeSort(array, 2, 0, 9);
 
 	Permute(Arr2, MaxSize);
-	Copy(Arr1, Arr2, MaxSize);
-	Resource_startTrack("insertion sort");
-	insertionSort(Arr1, MaxSize);
-	Resource_analyse(MaxSize);
+    Resource_startTrack("insertion-sort");
+	for(i=10;i<=1000;i+=10){
+        Copy(Arr1, Arr2, i);
+        insertionSort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
 
-	Resource_startTrack("insertion sort (best case)");
-	insertionSort(Arr1, MaxSize);
-	Resource_analyse(MaxSize);
+	Resource_startTrack("insertion-sort-best-case");
+	for(i=10;i<=1000;i+=10){
+        insertionSort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+
 
 	reverseCopy(arr3, Arr1, MaxSize);
 	Resource_startTrack("insertion sort (worst case)");
 	insertionSort(arr3, MaxSize);
-	Resource_analyse(MaxSize);
 
     Copy(Arr1, Arr2, MaxSize);
 	Resource_startTrack("heap sort");
 	heapsort(Arr1, MaxSize);
-	Resource_analyse(MaxSize);
 
 
 /*

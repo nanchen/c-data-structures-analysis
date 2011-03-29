@@ -8,6 +8,6 @@
 #ifndef TESTTREE_H_
 #define TESTTREE_H_
 
-int Tree_test(void);
+void Tree_test(void);
 
 #endif /* TESTTREE_H_ */

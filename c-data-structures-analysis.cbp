@@ -65,10 +65,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/queue.h" />
-		<Unit filename="ds-lib/resource-track.c">
+		<Unit filename="ds-lib/resourcetrack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ds-lib/resource-track.h" />
+		<Unit filename="ds-lib/resourcetrack.h" />
 		<Unit filename="ds-lib/sort.c">
 			<Option compilerVar="CC" />
 		</Unit>

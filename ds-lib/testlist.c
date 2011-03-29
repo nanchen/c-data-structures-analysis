@@ -3,7 +3,7 @@
 #include "resourcetrack.h"
 
 void PrintList(const List L) {
-	Position P = List_header(L);
+	ListPosition P = List_header(L);
 
 	if (List_isEmpty(L))
 		printf("Empty list\n");
@@ -18,7 +18,7 @@ void PrintList(const List L) {
 
 int List_test(void) {
 	List L;
-	Position P;
+	ListPosition P;
 	int i;
 
 	L = List_makeEmpty(NULL);
