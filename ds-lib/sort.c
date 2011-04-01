@@ -162,30 +162,41 @@ void Merge(ElementType A[], ElementType TmpArray[], int Lpos, int Rpos,
 	TmpPos = Lpos;
 	NumElements = RightEnd - Lpos + 1;
 
+    Resource_logTime(6);
 	/* main loop */
-	while (Lpos <= LeftEnd && Rpos <= RightEnd)
+	while (Lpos <= LeftEnd && Rpos <= RightEnd){
 		if (A[Lpos] <= A[Rpos])
 			TmpArray[TmpPos++] = A[Lpos++];
 		else
 			TmpArray[TmpPos++] = A[Rpos++];
+        Resource_logTime(7);
+	}
 
-	while (Lpos <= LeftEnd) /* Copy rest of first half */
+	while (Lpos <= LeftEnd){ /* Copy rest of first half */
 		TmpArray[TmpPos++] = A[Lpos++];
-	while (Rpos <= RightEnd) /* Copy rest of second half */
+		Resource_logTime(7);
+	}
+	while (Rpos <= RightEnd){ /* Copy rest of second half */
 		TmpArray[TmpPos++] = A[Rpos++];
+		Resource_logTime(7);
+	}
 
 	/* Copy TmpArray back */
-	for (i = 0; i < NumElements; i++, RightEnd--)
+	for (i = 0; i < NumElements; i++, RightEnd--){
 		A[RightEnd] = TmpArray[RightEnd];
+        Resource_logTime(3);
+	}
 }
 /* END */
 
 /* START: fig7_9.txt */
 void MSort(ElementType A[], ElementType TmpArray[], int Left, int Right) {
 	int Center;
+    Resource_logTime(1);
 
 	if (Left < Right) {
 		Center = (Left + Right) / 2;
+		Resource_logTime(4);
 		MSort(A, TmpArray, Left, Center);
 		MSort(A, TmpArray, Center + 1, Right);
 		Merge(A, TmpArray, Left, Center + 1, Right);
@@ -194,11 +205,12 @@ void MSort(ElementType A[], ElementType TmpArray[], int Left, int Right) {
 
 void mergesort(ElementType A[], int N) {
 	ElementType *TmpArray;
-
 	TmpArray = malloc(N * sizeof(ElementType));
+	Resource_logSpace(N*sizeof(ElementType));
 	if (TmpArray != NULL) {
 		MSort(A, TmpArray, 0, N - 1);
 		free(TmpArray);
+		Resource_logSpace(-N*sizeof(ElementType));
 	} else
 		fatalError( "No space for tmp array!!!" );
 }
@@ -358,6 +370,9 @@ int Arr2[MaxSize];
 int arr3[MaxSize];
 
 void Sort_test() {
+    const int START=10;
+    const int END=1000;
+    const int STEP=10;
 	int i;
 
 	// test radix exchange sort
@@ -368,7 +383,7 @@ void Sort_test() {
 
 	Permute(Arr2, MaxSize);
     Resource_startTrack("insertion-sort");
-	for(i=10;i<=1000;i+=10){
+	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
         insertionSort(Arr1, i);
         Resource_storeData(i);
@@ -376,20 +391,44 @@ void Sort_test() {
 	Resource_analyseSequence();
 
 	Resource_startTrack("insertion-sort-best-case");
-	for(i=10;i<=1000;i+=10){
+	for(i=START;i<=END;i+=STEP){
         insertionSort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
+	Resource_startTrack("insertion-sort-worst-case");
+	for(i=START;i<=END;i+=STEP){
+	    reverseCopy(arr3, Arr1, i);
+        insertionSort(arr3, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
 
-	reverseCopy(arr3, Arr1, MaxSize);
-	Resource_startTrack("insertion sort (worst case)");
-	insertionSort(arr3, MaxSize);
+    Resource_startTrack("heap-sort");
+	for(i=START;i<=END;i+=STEP){
+        Copy(Arr1, Arr2, i);
+        heapsort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
 
-    Copy(Arr1, Arr2, MaxSize);
-	Resource_startTrack("heap sort");
-	heapsort(Arr1, MaxSize);
+    Resource_startTrack("merge-sort");
+	for(i=START;i<=END;i+=STEP){
+        Copy(Arr1, Arr2, i);
+        mergesort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+
+    Resource_startTrack("quick-sort");
+	for(i=START;i<=END;i+=STEP){
+        Copy(Arr1, Arr2, i);
+        quicksort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+
 
 
 /*

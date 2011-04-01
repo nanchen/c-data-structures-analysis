@@ -57,6 +57,10 @@
 		</Unit>
 		<Unit filename="ds-lib/binheap.h" />
 		<Unit filename="ds-lib/fatal.h" />
+		<Unit filename="ds-lib/hashsep.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/hashsep.h" />
 		<Unit filename="ds-lib/list.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -78,6 +82,9 @@
 		</Unit>
 		<Unit filename="ds-lib/testaa.h" />
 		<Unit filename="ds-lib/testavl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testhash.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testheap.c">

@@ -27,19 +27,20 @@ int main(void) {
 	clock_t st_time, en_time;
 	st_time = times(&st_cpu);
 */
-    printf("-----------------Test Sorting------------------\n");
-	Sort_test();
 
-/*
-	printf("-----------------Test Tree-------------------\n");
-	Tree_test();
+//    printf("-----------------Test Sorting------------------\n");
+//	Sort_test();
+
+
+//	printf("-----------------Test Tree-------------------\n");
+//	Tree_test();
 
 	printf("-----------------Test List-------------------\n");
 	List_test();
 
-	printf("-----------------Test Queue------------------\n");
-	Queue_test();
-*/
+//	printf("-----------------Test Queue------------------\n");
+//	Queue_test();
+
 //	for( i = 0; i < 500000; i++ )
 //		value = 5000*8000;
 

@@ -18,6 +18,7 @@ void List_insert(ListElement X, List L, ListPosition P);
 void List_deleteList(List L);
 ListPosition List_header(List L);
 ListPosition List_first(List L);
+ListPosition List_last(List L);
 ListPosition List_advance(ListPosition P);
 ListElement List_retrieve(ListPosition P);
 

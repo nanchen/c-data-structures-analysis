@@ -1,6 +1,7 @@
         #include "list.h"
         #include <stdlib.h>
         #include "fatal.h"
+        #include "resourcetrack.h"
 
         /* Place in the interface file */
         struct Node
@@ -12,12 +13,16 @@
         List
         List_makeEmpty( List L )
         {
-            if( L != NULL )
+            if( L != NULL ) // 1
                 List_deleteList( L );
-            L = malloc( sizeof( struct Node ) );
-            if( L == NULL )
+            L = malloc( sizeof( struct Node ) ); // 4
+            Resource_logSpace(sizeof( struct Node ));
+            if( L == NULL ){ // 1
                 fatalError( "Out of memory!" );
-            L->Next = NULL;
+                Resource_logTime(1);
+            }
+            L->Next = NULL; // 2
+            Resource_logTime(8);
             return L;
         }
 
@@ -27,6 +32,7 @@
         int
         List_isEmpty( List L )
         {
+            Resource_logTime(3);
             return L->Next == NULL;
         }
 /* END */
@@ -37,6 +43,7 @@
 
         int List_isLast( ListPosition P, List L )
         {
+            Resource_logTime(3);
             return P->Next == NULL;
         }
 /* END */
@@ -47,13 +54,15 @@
         ListPosition
         List_find( ListElement X, List L )
         {
-            ListPosition P;
+            ListPosition P; //1
 
-/* 1*/      P = L->Next;
-/* 2*/      while( P != NULL && P->Element != X )
-/* 3*/          P = P->Next;
-
-/* 4*/      return P;
+/* 1*/      P = L->Next; //2
+/* 2*/      while( P != NULL && P->Element != X ){ //4
+/* 3*/          P = P->Next; //2
+                Resource_logTime(2);
+            }
+            Resource_logTime(8);
+/* 4*/      return P; //1
         }
 /* END */
 
@@ -66,16 +75,19 @@
         void
         List_delete( ListElement X, List L )
         {
-            ListPosition P, TmpCell;
+            ListPosition P, TmpCell; //2
 
-            P = List_findPrevious( X, L );
+            P = List_findPrevious( X, L ); //1
 
-            if( !List_isLast( P, L ) )  /* Assumption of header use */
+            if( !List_isLast( P, L ) )  /* Assumption of header use */ //2
             {                      /* X is found; delete it */
-                TmpCell = P->Next;
-                P->Next = TmpCell->Next;  /* Bypass deleted cell */
-                free( TmpCell );
+                TmpCell = P->Next; //2
+                P->Next = TmpCell->Next;  /* Bypass deleted cell */ //3
+                free( TmpCell ); //1
+                Resource_logSpace(-sizeof(struct Node));
+                Resource_logTime(6);
             }
+            Resource_logTime(6);
         }
 /* END */
 
@@ -86,13 +98,15 @@
         ListPosition
         List_findPrevious( ListElement X, List L )
         {
-            ListPosition P;
+            ListPosition P; //1
 
-/* 1*/      P = L;
-/* 2*/      while( P->Next != NULL && P->Next->Element != X )
-/* 3*/          P = P->Next;
-
-/* 4*/      return P;
+/* 1*/      P = L; //1
+/* 2*/      while( P->Next != NULL && P->Next->Element != X ){ //6
+/* 3*/          P = P->Next; //2
+                Resource_logTime(2);
+            }
+            Resource_logTime(9);
+/* 4*/      return P; //1
         }
 /* END */
 
@@ -104,15 +118,17 @@
         void
         List_insert( ListElement X, List L, ListPosition P )
         {
-            ListPosition TmpCell;
+            ListPosition TmpCell; //1
 
-/* 1*/      TmpCell = malloc( sizeof( struct Node ) );
-/* 2*/      if( TmpCell == NULL )
+/* 1*/      TmpCell = malloc( sizeof( struct Node ) ); //3
+            Resource_logSpace(sizeof(struct Node));
+/* 2*/      if( TmpCell == NULL ) //1
 /* 3*/          fatalError( "Out of space!!!" );
 
-/* 4*/      TmpCell->Element = X;
-/* 5*/      TmpCell->Next = P->Next;
-/* 6*/      P->Next = TmpCell;
+/* 4*/      TmpCell->Element = X; //2
+/* 5*/      TmpCell->Next = P->Next; //3
+/* 6*/      P->Next = TmpCell; //2
+            Resource_logTime(12);
         }
 /* END */
 
@@ -142,39 +158,59 @@
         void
         List_deleteList( List L )
         {
-            ListPosition P, Tmp;
+            ListPosition P, Tmp; //2
 
-/* 1*/      P = L->Next;  /* List_header assumed */
-/* 2*/      L->Next = NULL;
-/* 3*/      while( P != NULL )
+/* 1*/      P = L->Next;  /* List_header assumed */ // 2
+/* 2*/      L->Next = NULL; //2
+/* 3*/      while( P != NULL ) //1
             {
-/* 4*/          Tmp = P->Next;
-/* 5*/          free( P );
-/* 6*/          P = Tmp;
+/* 4*/          Tmp = P->Next; //2
+/* 5*/          free( P );  //1
+/* 6*/          P = Tmp; // 1
+                Resource_logTime(4);
+//                printf("List_deleteList(), sizeof(P) = %d\n", sizeof(P));
+                Resource_logSpace(-sizeof(struct Node));
             }
+            Resource_logTime(7);
         }
 /* END */
 
         ListPosition
         List_header( List L )
         {
+            Resource_logTime(1);
             return L;
         }
 
         ListPosition
         List_first( List L )
         {
+            Resource_logTime(2);
             return L->Next;
+        }
+
+        ListPosition List_last(List L){
+            ListPosition P; //1
+
+            P = L->Next; //2
+            while( P->Next != NULL ){ //4
+                P = P->Next; //2
+                Resource_logTime(2);
+            }
+            Resource_logTime(8);
+            return P; //1
         }
 
         ListPosition
         List_advance( ListPosition P )
         {
+            Resource_logTime(2);
             return P->Next;
         }
 
         ListElement
         List_retrieve( ListPosition P )
         {
+            Resource_logTime(2);
             return P->Element;
         }
