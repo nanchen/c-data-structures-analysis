@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "resourcetrack.h"
 
 // calculation result
-struct CalcResult{
+struct CalcResult
+{
     float power;
     float cn2;
     float cnlogn;
@@ -54,16 +56,40 @@ void printList(const List l)
     logAllowed = true;
 }
 
-void Resource_startTrack(const char* msg)
+struct Operation** pointer = NULL;
+int operationCount = 0;
+
+
+void Resource_initilizeOperationArray(){
+    int i;
+    operationCount = 0;
+
+    for(i=0;i<20;i++){
+        if(operations[i]!=NULL)
+            free(operations[i]);
+        operations[i] = NULL;
+    }
+}
+void Resource_startTrack(const char* path, const char* msg)
 {
     printf("Start tracking time/space usage for %s\n", msg);
+    struct Operation* op = (struct Operation*) malloc(sizeof(struct Operation));
+    op->path = path;
+    op->name = msg;
+    operations[operationCount] = op;
+    /*
+    if(pointer==NULL)
+        pointer = &operations[0];
+    *pointer = op;
+    */
     Resource_clearData();
     target = msg;
 
     startTime = clock();
 
     logAllowed = false;
-    if(resourceList!=NULL){
+    if(resourceList!=NULL)
+    {
         List_deleteList(resourceList);
     }
     resourceList = List_makeEmpty(NULL);
@@ -78,8 +104,9 @@ void Resource_logTime(unsigned long time)
 
 void Resource_logSpace(int space)
 {
-    if(logAllowed){
-       // printf("space logged: %d\n", space);
+    if(logAllowed)
+    {
+        // printf("space logged: %d\n", space);
         totalSpace += space;
         if(totalSpace>maxSpace)
             maxSpace = totalSpace;
@@ -88,7 +115,8 @@ void Resource_logSpace(int space)
 
 ListPosition position=NULL;
 
-void Resource_clearData(){
+void Resource_clearData()
+{
     totalTime = 0;
 //    printf("clear totalSpace = %d\n", totalSpace);
     totalSpace = 0;
@@ -159,7 +187,8 @@ void Resource_analyseSequence()
 
         //calc data
         struct Resource* res = (struct Resource*) List_retrieve(p);
-        if(count ==0){
+        if(count ==0)
+        {
             lastTime = res->time;
             lastSpace = res->space;
         }
@@ -185,9 +214,10 @@ void Resource_analyseSequence()
     }
     while (!List_isLast(p, resourceList));
 
-    if(constant && constantSpace){
+    if(constant && constantSpace)
+    {
         printf("constant time & space! constant time = %ld, constant space = %ld\n", lastTime,lastSpace);
-        return;
+        //return;
     }
 
     // mean
@@ -200,13 +230,19 @@ void Resource_analyseSequence()
     printf("Constant means: cn2 = %.2f, cnlogn = %.2f, cn = %.2f \t cn2 space = %.2f, cnlogn space = %.2f, cn space = %.2f\n",mean.cn2, mean.cnlogn, mean.cn, mean.cn2Space, mean.cnlognSpace, mean.cnSpace);
 
     // ---------Calc variance of constants-----------
+    struct Operation* op = operations[operationCount];
+
     p = List_header(resourceList);
     // open file
     char data[50];
     char filePath[50] = "./plot/";
+    strcat(filePath, op->path);
+    strcat(filePath, "/");
+    mkdir(filePath, 7777);
     strcat(filePath, target);
     strcat(filePath, ".dat");
     FILE *dataFile = fopen(filePath, "w+");
+    fputs("#size  time  space\n", dataFile);
     do
     {
         // sum variance
@@ -236,7 +272,71 @@ void Resource_analyseSequence()
     deviation.cnlognSpace = fabs(sqrt(sumDeviation.cnlognSpace)/mean.cnlognSpace*100);
     deviation.cnSpace = fabs(sqrt(sumDeviation.cnSpace)/mean.cnSpace*100);
 
+    // determine which class of complexity
     printf("Relative standard deviation: c n2 = %.2f%, c nlogn = %.2f%, c n = %.2f% \t c n2 space = %.2f%, cnlogn space = %.2f%, cn space = %.2f%\n", deviation.cn2, deviation.cnlogn, deviation.cn, deviation.cn2Space, deviation.cnlognSpace, deviation.cnSpace);
+//    struct Operation* op = *pointer;
+    float dev = 0.0f;
+    float con = 0.0f;
+    if(constant)
+    {
+        op->timeComplexity = N0;
+        op->timeConstant = lastTime;
+    }
+    else
+    {
+        if(deviation.cnlogn < deviation.cn2)
+        {
+            dev = deviation.cnlogn;
+            con = mean.cnlogn;
+            op->timeComplexity = NLOGN;
+        }
+        else
+        {
+            dev = deviation.cn2;
+            con = mean.cn2;
+            op->timeComplexity = N2;
+        }
+        if(deviation.cn < dev)
+        {
+            dev = deviation.cn;
+            con = mean.cn;
+            op->timeComplexity = N;
+        }
+        op->timeDeviation = dev;
+        op->timeConstant = con;
+    }
+
+    if(constantSpace)
+    {
+        op->spaceComplexity = N0;
+        op->spaceConstant = lastSpace;
+    }
+    else
+    {
+        if(deviation.cnlognSpace < deviation.cn2Space)
+        {
+            dev = deviation.cnlognSpace;
+            con = mean.cnlognSpace;
+            op->spaceComplexity = NLOGN;
+        }
+        else
+        {
+            dev = deviation.cn2Space;
+            con = mean.cn2Space;
+            op->spaceComplexity = N2;
+        }
+        if(deviation.cnSpace < dev)
+        {
+            dev = deviation.cnSpace;
+            con = mean.cnSpace;
+            op->spaceComplexity = N;
+        }
+        op->spaceDeviation = dev;
+        op->spaceConstant = con;
+    }
+    printf("Analytical result: class = %d, deviation = %.2f%, constant = %f space class =  %d, space dev = %.2f%, space constant = %.2f%\n", op->timeComplexity, op->timeDeviation, op->timeConstant, op->spaceComplexity, op->spaceDeviation, op->spaceConstant);
+    //pointer++;
+    operationCount++;
     logAllowed = true;
 }
 
@@ -280,4 +380,286 @@ struct CalcResult* Resource_analyse(unsigned int size, unsigned long time, long 
     ret->cnSpace = c;
 
     return ret;
+}
+
+bool include(char* list[], int listLength, char* op)
+{
+    bool ret= false;
+    int i;
+    for(i=0; i<listLength; i++)
+    {
+        char* item = list[i];
+        int cmp = strcmp(item, op);
+        if(cmp==0)
+            return true;
+    }
+    return ret;
+}
+
+void removeUselessData(FILE* fp)
+{
+    fseek( fp, -4, SEEK_END);
+    int c = fgetc (fp);
+    // printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!c= %d\n",c);
+    if(c==',')
+    {
+//            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!c= %d\n",c);
+        fseek ( fp , -4, SEEK_END );
+        fputs("        \n", fp);
+    }
+}
+
+char** getFunctionInfo(enum ComplexityClass cClass, float constant, float dev)
+{
+    char* ret[4] = {"","",""};
+    char func[100] = "";
+    char funcTitle[100] = "";
+    char bigO[100] = "";
+    char deviation[100] = "";
+    sprintf(deviation, "RSD = %.2f%", dev);
+    if(cClass == N2)
+    {
+        sprintf(func, "%.2f * x * x", constant);
+        sprintf(funcTitle, "%.2f * N^2");
+        sprintf(bigO, "O(N^2)");
+    }
+    if(cClass == NLOGN)
+    {
+        sprintf(func, "%.2f * x * log(x)/log(2)", constant);
+        sprintf(funcTitle, "%.2f * NlogN");
+        sprintf(bigO, "O(N * logN)");
+   }
+    if(cClass == N)
+    {
+        sprintf(func, "%.2f * x", constant);
+        sprintf(funcTitle, "%.2f * N");
+        sprintf(bigO, "O(N)");
+    }
+    if(cClass == N0)
+    {
+        sprintf(func, "%.2f", constant);
+        sprintf(funcTitle, "%.2f");
+        sprintf(bigO, "O(1)");
+    }
+
+    ret[0] = func;
+    ret[1] = funcTitle;
+    ret[2] = deviation;
+    ret[3] = bigO;
+    return ret;
+}
+
+void Resource_writePlotScript(const char* scriptName, char* opList[], int opListLength, int type)
+{
+    printf("writing gnu plot script %s \n",scriptName);
+//    struct Operation** p = &operations[0];
+    bool includeTime = type == 0 || type ==2;
+    bool includeSpace = type == 1 || type ==2;
+    int i,j,k,timeCount,spaceCount;
+    struct Operation* oi;
+    struct Operation* oj;
+    //initilize
+    for(i=0; i<operationCount; i++)
+    {
+        oi = operations[i];
+        oi->timeEqual = false;
+        oi->spaceEqual = false;
+        for(k=0; k<20; k++)
+        {
+            oi->timeEqualList[k] = -1;
+            oi->spaceEqualList[k] = -1;
+        }
+    }
+    // check equality
+    for(i=0; i<operationCount; i++)
+    {
+        oi = operations[i];
+
+        if(!include(opList,opListLength, oi->name) || (oi->timeEqual && oi->spaceEqual))
+            continue;
+        timeCount = 0;
+        spaceCount = 0;
+
+        for(j=i+1; j<operationCount; j++)
+        {
+            oj = operations[j];
+            if(!include(opList,opListLength,oj->name))
+                continue;
+            if(oi->timeComplexity == oj->timeComplexity && oi->timeConstant == oj->timeConstant)
+            {
+                oi->timeEqualList[timeCount] = j;
+                oj->timeEqual = true;
+                timeCount++;
+            }
+            if(oi->spaceComplexity == oj->spaceComplexity && oi->spaceConstant == oj->spaceConstant)
+            {
+                oi->spaceEqualList[spaceCount] = j;
+                oj->spaceEqual = true;
+                spaceCount++;
+            }
+        }
+    }
+
+    // file paths
+    char filePath[200] = "";
+    sprintf(filePath, "./plot/%s/%s-time.plt",oi->path, scriptName);
+    char spaceFilePath[200] = "";
+    sprintf(spaceFilePath, "./plot/%s/%s-space.plt", oi->path, scriptName);
+
+    // open files
+    FILE *dataFile;
+    FILE *spaceDataFile;
+    if(includeTime){
+        dataFile = fopen(filePath, "w+");
+        fputs("plot ", dataFile);
+    }
+    if(includeSpace)
+    {
+        spaceDataFile = fopen(spaceFilePath, "w+");
+        fputs("plot ", spaceDataFile);
+    }
+
+    // write plot scripts
+    char spaceData[200] = "";
+    struct Operation* op;
+
+    for(i=0; i<operationCount; i++)
+    {
+        op = operations[i];
+        if(!include(opList,opListLength,op->name)) //not included
+            continue;
+
+        // time
+        if(includeTime && !op->timeEqual)
+        {
+            char data[200] = "";
+            sprintf(data, "\"%s.dat\" using 1:2 title \"%s ", op->name, op->name);
+            fputs(data,dataFile);
+
+            // equal list
+            int* p = &op->timeEqualList[0];
+            int equalCount = 0;
+            while(*p!=-1)
+            {
+                if(equalCount > 1){
+                    fputs("... ",dataFile);
+                    break;
+                }
+                struct Operation* another = operations[*p];
+                fputs(another->name, dataFile);
+                fputs(" ", dataFile);
+                p++;
+                equalCount++;
+            }
+            // function title
+            char titleData[100] = "";
+            char** funcArr = getFunctionInfo(op->timeComplexity, op->timeConstant, op->timeDeviation);
+            char* title = *(funcArr+1);
+            strcat(titleData, "T(N) => ");
+            strcat(titleData,title);
+            fputs(titleData, dataFile);
+
+            // function
+            char funcData[100] = "";
+            strcat(funcData, "\", \\\n");
+            strcat(funcData, *funcArr);
+            strcat(funcData, " notitle, \\\n");
+            fputs(funcData, dataFile);
+        }
+        // space
+        if(includeSpace && !op->spaceEqual)
+        {
+            char data[200] = "";
+            sprintf(data, "\"%s.dat\" using 1:3 title \"%s ", op->name, op->name);
+            fputs(data,spaceDataFile);
+
+            // equal list
+            int* p = &op->spaceEqualList[0];
+            int equalCount = 0;
+            while(*p!=-1)
+            {
+                if(equalCount > 1){
+                    fputs("... ", spaceDataFile);
+                    break;
+                }
+
+                struct Operation* another = operations[*p];
+                fputs(another->name, spaceDataFile);
+                fputs(" ", spaceDataFile);
+                p++;
+                equalCount++;
+            }
+            // function title
+            char titleData[100] = "";
+            char** funcArr = getFunctionInfo(op->spaceComplexity, op->spaceConstant, op->spaceDeviation);
+            char* title = *(funcArr+1);
+            strcat(titleData, "S(N) => ");
+            strcat(titleData,title);
+            fputs(titleData, spaceDataFile);
+
+            // function
+            char funcData[100] = "";
+            strcat(funcData, "\", \\\n");
+            strcat(funcData, *funcArr);
+            strcat(funcData, " notitle, \\\n");
+            fputs(funcData, spaceDataFile);
+        }
+
+
+    }
+    // remove ", \" on last line
+    if(includeTime)
+    {
+        removeUselessData(dataFile);
+        fclose(dataFile);
+    }
+    if(includeSpace)
+    {
+        removeUselessData(spaceDataFile);
+        fclose(spaceDataFile);
+    }
+}
+
+
+void Resource_writeTableData(const char* tableName)
+{
+    int i;
+    char data[20000] = "";
+    char filePath[200] = "";
+    sprintf(filePath, "./table/%s.txt",tableName);
+    FILE *dataFile = fopen(filePath, "w+");
+    sprintf(data,"Operation\tEmpirical time\tAnalytical time\tComparision\tEmpirical space\tAnalytical space\tComparision\n");
+    for(i=0; i<operationCount; i++)
+    {
+        struct Operation* op = operations[i];
+        // time
+        char** funcArr = getFunctionInfo(op->timeComplexity, op->timeConstant, op->timeDeviation);
+        strcat(data, op->name);
+        strcat(data,"\tTime(N) = ");
+        strcat(data,*(funcArr+1));
+        if(op->timeComplexity !=N0){
+            strcat(data, " ( ");
+            strcat(data, *(funcArr+2));
+            strcat(data, "% )");
+        }
+        strcat(data, "\t ");
+        strcat(data, *(funcArr+3));
+        strcat(data, "\tEQUAL");
+        // space
+        strcat(data, " \tSpace(N) = ");
+        char** funcSpaceArr = getFunctionInfo(op->spaceComplexity, op->spaceConstant, op->spaceDeviation);
+        strcat(data,*(funcSpaceArr+1));
+        if(op->spaceComplexity !=N0){
+            strcat(data, " ( ");
+            strcat(data, *(funcSpaceArr+2));
+            strcat(data, "% )");
+        }
+        strcat(data, "\t ");
+        strcat(data, *(funcSpaceArr+3));
+        strcat(data, "\tEQUAL");
+
+        strcat(data,"\n");
+    }
+    printf("-----------------------------------------------\n%s\n",data);
+    fputs(data, dataFile);
 }

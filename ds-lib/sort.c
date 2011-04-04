@@ -381,55 +381,82 @@ void Sort_test() {
 	//	printArray(array,10);
 	//	radixExchangeSort(array, 2, 0, 9);
 
+
+    Resource_initilizeOperationArray();
+
 	Permute(Arr2, MaxSize);
-    Resource_startTrack("insertion-sort");
+    Resource_startTrack("sort","insertion-sort");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
+        Resource_clearData();
         insertionSort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("insertion-sort-best-case");
+	Resource_startTrack("sort","insertion-sort-best-case");
 	for(i=START;i<=END;i+=STEP){
+        Resource_clearData();
         insertionSort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("insertion-sort-worst-case");
+	Resource_startTrack("sort","insertion-sort-worst-case");
 	for(i=START;i<=END;i+=STEP){
 	    reverseCopy(arr3, Arr1, i);
+        Resource_clearData();
         insertionSort(arr3, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
-    Resource_startTrack("heap-sort");
+    Resource_startTrack("sort","heap-sort");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
+        Resource_clearData();
         heapsort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
-    Resource_startTrack("merge-sort");
+    Resource_startTrack("sort","merge-sort");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
+        Resource_clearData();
         mergesort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
-    Resource_startTrack("quick-sort");
+    Resource_startTrack("sort","quick-sort");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
+        Resource_clearData();
         quicksort(Arr1, i);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
+/*
+   // --------------Time------------------
+    char* list0[] = {"List_makeEmpty","List_find-worst-case"};
+    Resource_writePlotScript("List0",list0,2,0);
 
+    char* list1[] = {"List_deleteList"};
+    Resource_writePlotScript("List_deleteList", list1,1,0);
+
+    char* opConstant[] = {"List_isEmpty","List_isLast", "List_delete-worst-case", "List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
+    Resource_writePlotScript("List_constant",opConstant,9,0);
+
+    //---------------space----------------
+    char* list2[] = {"List_makeEmpty","List_deleteList"};
+    Resource_writePlotScript("List_linear",list2,2,1);
+
+    char* list3[] = {"List_isEmpty","List_isLast","List_find-worst-case","List_delete-worst-case","List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
+    Resource_writePlotScript("List_constant",list3,10,1);
+*/
+    Resource_writeTableData("Sort");
 
 /*
 	for (i = 0; i < 10; i++) {

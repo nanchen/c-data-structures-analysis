@@ -32,24 +32,16 @@ ListElement last(){
 
 int List_test(void) {
     const int START=10;
-    const int END=500;
+    const int END=100;
     const int STEP=10;
 
 	List L, retL;
 	ListPosition P;
 	int i;
 
-/*
-    Resource_startTrack("List_makeEmpty");
-    L = createTestList(1);
-    //   Resource_clearData();
-//    retL = List_makeEmpty(L);
-    List_deleteList(L);
-    Resource_storeData(1);
-	Resource_analyseSequence();
-*/
+    Resource_initilizeOperationArray();
 
-    Resource_startTrack("List_makeEmpty");
+    Resource_startTrack("list","List_makeEmpty");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -59,7 +51,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_isEmpty");
+    Resource_startTrack("list","List_isEmpty");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -69,7 +61,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_isLast");
+    Resource_startTrack("list","List_isLast");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         P = List_header(L);
@@ -80,7 +72,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_find-worst-case");
+    Resource_startTrack("list","List_find-worst-case");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         P = List_header(L);
@@ -92,7 +84,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_delete-worst-case");
+    Resource_startTrack("list","List_delete-worst-case");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         P = List_header(L);
@@ -104,7 +96,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_findPrevious-worst-case");
+    Resource_startTrack("list","List_findPrevious-worst-case");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         P = List_header(L);
@@ -116,7 +108,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_insert-worst-case"); // first position
+    Resource_startTrack("list","List_insert-worst-case"); // first position
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         P = List_header(L);
@@ -129,7 +121,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_deleteList");
+    Resource_startTrack("list","List_deleteList");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -139,7 +131,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_header");
+    Resource_startTrack("list","List_header");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -149,7 +141,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_first");
+    Resource_startTrack("list","List_first");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -159,7 +151,7 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_advance");
+    Resource_startTrack("list","List_advance");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
@@ -169,15 +161,33 @@ int List_test(void) {
 	Resource_analyseSequence();
 
     L = List_makeEmpty(NULL);
-    Resource_startTrack("List_retrieve");
+    Resource_startTrack("list","List_retrieve");
 	for(i=START;i<=END;i+=STEP){
         L = createTestList(i);
         Resource_clearData();
-        ListElement element = List_retrieve(P);
+        List_retrieve(P);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
+    // --------------Time------------------
+    char* list0[] = {"List_makeEmpty","List_find-worst-case"};
+    Resource_writePlotScript("List0",list0,2,0);
+
+    char* list1[] = {"List_deleteList"};
+    Resource_writePlotScript("List_deleteList", list1,1,0);
+
+    char* opConstant[] = {"List_isEmpty","List_isLast", "List_delete-worst-case", "List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
+    Resource_writePlotScript("List_constant",opConstant,9,0);
+
+    //---------------space----------------
+    char* list2[] = {"List_makeEmpty","List_deleteList"};
+    Resource_writePlotScript("List_linear",list2,2,1);
+
+    char* list3[] = {"List_isEmpty","List_isLast","List_find-worst-case","List_delete-worst-case","List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
+    Resource_writePlotScript("List_constant",list3,10,1);
+
+    Resource_writeTableData("List");
 
 /*
 	L = List_makeEmpty(NULL);
