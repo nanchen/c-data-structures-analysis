@@ -35,6 +35,7 @@ struct Operation{
 };
 struct Operation* operations[20];
 
+void Resource_setMode(int mode);
 void Resource_initilizeOperationArray();
 void Resource_startTrack(const char* path, const char* msg);
 void Resource_logTime(unsigned long time);

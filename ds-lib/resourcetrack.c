@@ -11,9 +11,10 @@ struct CalcResult
 {
     float power;
     float cn2;
+    float cnlog2n;
     float cnlogn;
     float cn;
-    float c1;
+//    float c1;
 
     float cn2Space;
     float cnlognSpace;
@@ -34,6 +35,8 @@ clock_t startTime;
 clock_t endTime;
 
 bool logAllowed = true;
+
+
 
 void printList(const List l)
 {
@@ -59,6 +62,11 @@ void printList(const List l)
 struct Operation** pointer = NULL;
 int operationCount = 0;
 
+int timeMode = 0;
+
+void Resource_setMode(int mode){
+    timeMode = mode;
+}
 
 void Resource_initilizeOperationArray(){
     int i;
@@ -77,11 +85,7 @@ void Resource_startTrack(const char* path, const char* msg)
     op->path = path;
     op->name = msg;
     operations[operationCount] = op;
-    /*
-    if(pointer==NULL)
-        pointer = &operations[0];
-    *pointer = op;
-    */
+
     Resource_clearData();
     target = msg;
 
@@ -122,6 +126,7 @@ void Resource_clearData()
     totalSpace = 0;
     maxSpace = 0;
     logAllowed = true;
+    startTime = clock();
 }
 
 void Resource_storeData(unsigned int size)
@@ -133,16 +138,17 @@ void Resource_storeData(unsigned int size)
     struct Resource* res = (struct Resource *)malloc( sizeof( struct Resource ) );
     res->size = size;
     // time
-    res->time = totalTime;
-    /*
-    long diff = (clock() - startTime) *1000 / CLOCKS_PER_SEC;
-    res->time = diff;
-    printf("now = %ld, startTime = %ld, diff = %ld, CLOCKS_PER_SEC = %ld\n", clock(),startTime, diff, CLOCKS_PER_SEC);
-    */
+    if(timeMode == 0)
+        res->time = totalTime;
+    if(timeMode == 1){
+        long diff = (clock() - startTime)*100;
+        res->time = diff;
+    //  printf("now = %ld, startTime = %ld, diff = %ld, CLOCKS_PER_SEC = %ld\n", clock(),startTime, diff, CLOCKS_PER_SEC);
+    }
     // space
 //    struct mstats* mem = mstats();
 //    printf("bytes used: %d\n",mem);
-    if(maxSpace>0)
+    if(maxSpace>0 && totalSpace >= 0)
         res->space = maxSpace;
     else
         res->space = totalSpace;
@@ -193,11 +199,12 @@ void Resource_analyseSequence()
             lastSpace = res->space;
         }
         struct CalcResult* calcRet = Resource_analyse(res->size, res->time, res->space);
-        printf("(%d, %ld, %ld) (%f, %f, %f, %f\t %f, %f, %f) \n",res->size,res->time, res->space, calcRet->power, calcRet->cn2, calcRet->cnlogn, calcRet->cn, calcRet->cn2Space, calcRet->cnlognSpace, calcRet->cnSpace);
+        printf("(%d, %ld, %ld) (%.2f, %.2f, %.2f, %.2f, %.2f\t %.2f, %.2f, %.2f) \n",res->size,res->time, res->space, calcRet->power, calcRet->cn2, calcRet->cnlog2n, calcRet->cnlogn, calcRet->cn, calcRet->cn2Space, calcRet->cnlognSpace, calcRet->cnSpace);
         res->calcResult = calcRet;
 
         //sum of constants
         sum.cn2 += calcRet->cn2;
+        sum.cnlog2n += calcRet->cnlog2n;
         sum.cnlogn += calcRet->cnlogn;
         sum.cn += calcRet->cn;
         sum.cn2Space += calcRet->cn2Space;
@@ -222,6 +229,7 @@ void Resource_analyseSequence()
 
     // mean
     mean.cn2 =  sum.cn2 / count;
+    mean.cnlog2n = sum.cnlog2n / count;
     mean.cnlogn = sum.cnlogn / count;
     mean.cn = sum.cn / count;
     mean.cn2Space = sum.cn2Space / count;
@@ -250,6 +258,7 @@ void Resource_analyseSequence()
         struct Resource* res = (struct Resource*) List_retrieve(p);
         struct CalcResult* ret = res->calcResult;
         sumDeviation.cn2 += pow((ret->cn2 - mean.cn2),2) / count;
+        sumDeviation.cnlog2n += pow((ret->cnlog2n - mean.cnlog2n),2) / count;
         sumDeviation.cnlogn += pow((ret->cnlogn - mean.cnlogn),2) / count;
         sumDeviation.cn += pow((ret->cn - mean.cn),2) / count;
         sumDeviation.cn2Space += pow((ret->cn2Space - mean.cn2Space),2) / count;
@@ -266,6 +275,7 @@ void Resource_analyseSequence()
 
     // deviation
     deviation.cn2 = sqrt(sumDeviation.cn2)/mean.cn2*100;
+    deviation.cnlog2n = sqrt(sumDeviation.cnlog2n)/mean.cnlog2n*100;
     deviation.cnlogn = sqrt(sumDeviation.cnlogn)/mean.cnlogn*100;
     deviation.cn = sqrt(sumDeviation.cn)/mean.cn*100;
     deviation.cn2Space = fabs(sqrt(sumDeviation.cn2Space) /mean.cn2Space * 100);
@@ -273,7 +283,7 @@ void Resource_analyseSequence()
     deviation.cnSpace = fabs(sqrt(sumDeviation.cnSpace)/mean.cnSpace*100);
 
     // determine which class of complexity
-    printf("Relative standard deviation: c n2 = %.2f%, c nlogn = %.2f%, c n = %.2f% \t c n2 space = %.2f%, cnlogn space = %.2f%, cn space = %.2f%\n", deviation.cn2, deviation.cnlogn, deviation.cn, deviation.cn2Space, deviation.cnlognSpace, deviation.cnSpace);
+    printf("Relative standard deviation: c n2 = %.2f%, c nlog^2n = %.2f%, c nlogn = %.2f%, c n = %.2f% \t c n2 space = %.2f%, cnlogn space = %.2f%, cn space = %.2f%\n", deviation.cn2, deviation.cnlog2n, deviation.cnlogn, deviation.cn, deviation.cn2Space, deviation.cnlognSpace, deviation.cnSpace);
 //    struct Operation* op = *pointer;
     float dev = 0.0f;
     float con = 0.0f;
@@ -352,10 +362,14 @@ struct CalcResult* Resource_analyse(unsigned int size, unsigned long time, long 
     ret->power = power;
 
     long n2 =  size * size;
+    long nlog2n = size * log2((float)size) * log2((float)size);
     long nlogn = size * log2((float)size);
     float c = (float)time / (float)n2;
 //    printf("\trunning time = %f * n^2\n",c);
     ret->cn2 = c;
+
+    c = (float)time / (float)nlog2n;
+    ret->cnlog2n = c;
 
     c = (float)time / (float)nlogn;
 //    printf("\trunning time = %f * n * log(n)\n",c);

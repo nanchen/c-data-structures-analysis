@@ -6,6 +6,7 @@
 #include "sort.h"
 #include "resourcetrack.h"
 
+const int SPACE_ELEMENT_INT =  sizeof(ElementType) + sizeof(int);
 //------------------------radix sort--------------------------------------
 void printArray(ElementType a[], int n) {
 	int i;
@@ -59,47 +60,68 @@ void radixExchangeSort(ElementType a[], int bit, int left, int right) {
 //------------------------radix sort--------------------------------------
 
 void Swap(ElementType *Lhs, ElementType *Rhs) {
-	ElementType Tmp = *Lhs;
-	*Lhs = *Rhs;
-	*Rhs = Tmp;
-	Resource_logTime(7);
+    const int SPACE = 2*sizeof(ElementType);
+    Resource_logSpace(SPACE);
+
+	ElementType Tmp = *Lhs; //2
+	*Lhs = *Rhs; //3
+	*Rhs = Tmp; //2
+	Resource_logTime(9);
+	Resource_logSpace(-SPACE);
 }
 
 /* START: fig7_2.txt */
 void insertionSort(ElementType A[], int N) {
-    Resource_logSpace(N);
-	int j, P;
-	ElementType Tmp;
+    //--------------space------------------------------
+	const int SPACE = sizeof(ElementType) + sizeof(int);
+	Resource_logSpace(SPACE);
+    //--------------space------end---------------------
 
-	for (P = 1; P < N; P++) {
-		Tmp = A[P];
-		Resource_logTime(3);
-		for (j = P; j > 0 && A[j - 1] > Tmp; j--){
-			A[j] = A[j - 1];
-			Resource_logTime(7); // 5 steps in for loop, 2 steps of retriving data from array & assign
+	int j, P;   // time = 2
+	ElementType Tmp; // time = 1
+
+	for (P = 1; P < N; P++) { // time = 3
+		Tmp = A[P]; // time = 2
+		for (j = P; j > 0 && A[j - 1] > Tmp; j--){ // time = 7
+			A[j] = A[j - 1]; // time = 4
+			Resource_logTime(11); // 7 steps in for loop, 4 steps of retriving data from array & assign
 		}
-		A[j] = Tmp;
-		Resource_logTime(1);
+		A[j] = Tmp; // time = 2
+		Resource_logTime(7);
 	}
+	Resource_logTime(5);
+	Resource_logSpace(-SPACE);
 }
 /* END */
 
 /* START: fig7_4.txt */
 void shellsort(ElementType A[], int N) {
-	int i, j, Increment;
-	ElementType Tmp;
+	Resource_logSpace(SPACE_ELEMENT_INT);
 
-	/* 1*/for (Increment = N / 2; Increment > 0; Increment /= 2)
-		/* 2*/for (i = Increment; i < N; i++) {
-			/* 3*/Tmp = A[i];
-			/* 4*/
-			for (j = i; j >= Increment; j -= Increment)
-				/* 5*/if (Tmp < A[j - Increment])
-					/* 6*/A[j] = A[j - Increment];
-				else
-					/* 7*/break;
-			/* 8*/A[j] = Tmp;
+	int i, j, Increment; // 3
+	ElementType Tmp; // 1
+
+    for (Increment = N / 2; Increment > 0; Increment /= 2){ // 3
+   		Resource_logTime(3);
+		for (i = Increment; i < N; i++) { // 3
+			Tmp = A[i]; //2
+			for (j = i; j >= Increment; j -= Increment){ // 3
+				if (Tmp < A[j - Increment]){ // 3
+					A[j] = A[j - Increment]; // 4
+					Resource_logTime(4);
+				}
+				else{
+					Resource_logTime(1);
+					break; //1
+				}
+				Resource_logTime(6);
+			}
+			A[j] = Tmp; // 2
+			Resource_logTime(7);
 		}
+    }
+    Resource_logTime(6);
+    Resource_logSpace(-SPACE_ELEMENT_INT);
 }
 /* END */
 
@@ -108,46 +130,50 @@ void shellsort(ElementType A[], int N) {
 #define LeftChild( i )  ( 2 * ( i ) + 1 )
 
 void PercDown(ElementType A[], int i, int N) {
-	int Child;
-	ElementType Tmp;
+    const int SPACE = sizeof(ElementType) + 2 * sizeof(int);
+    Resource_logSpace(SPACE);
 
-	for (Tmp = A[i]; LeftChild( i ) < N; i = Child) {
-		Resource_logTime(3);
+	int Child; //1
+	ElementType Tmp; //1
 
-		Child = LeftChild( i );
-		Resource_logTime(3);
+	for (Tmp = A[i]; LeftChild( i ) < N; i = Child) { // 2
+		Child = LeftChild( i ); //1
 
-		Resource_logTime(7);
-		if (Child != N - 1 && A[Child + 1] > A[Child]){
-            Child++;
-            Resource_logTime(1);
+		if (Child != N - 1 && A[Child + 1] > A[Child]){ //7
+            Child++; //2
+            Resource_logTime(2);
 		}
 
-		Resource_logTime(2);
-		if (Tmp < A[Child]){
-			A[i] = A[Child];
-			Resource_logTime(2);
+		if (Tmp < A[Child]){ //2
+			A[i] = A[Child]; //3
+			Resource_logTime(3);
 		}
-		else
+		else{
+		    Resource_logTime(1);
 			break;
+		}
+		Resource_logTime(10);
 	}
-	A[i] = Tmp;
-	Resource_logTime(1);
+	A[i] = Tmp; //2
+	Resource_logTime(6);
+	Resource_logSpace(-SPACE);
 }
 
 void heapsort(ElementType A[], int N) {
-	int i;
-    Resource_logSpace(N);
+    Resource_logSpace(SPACE_ELEMENT_INT);
 
-	for (i = N / 2; i >= 0; i--){ /* BuildHeap */
-	    Resource_logTime(2);
+	int i; //1
+	for (i = N / 2; i >= 0; i--){ /* BuildHeap */ //3
+	    Resource_logTime(3);
 		PercDown(A, i, N);
 	}
-	for (i = N - 1; i > 0; i--) {
-		Resource_logTime(2);
+	for (i = N - 1; i > 0; i--) { //3
+		Resource_logTime(3);
 		Swap(&A[0], &A[i]); /* DeleteMax */
 		PercDown(A, 0, i);
 	}
+	Resource_logTime(3);
+	Resource_logSpace(SPACE_ELEMENT_INT);
 }
 /* END */
 
@@ -156,63 +182,77 @@ void heapsort(ElementType A[], int N) {
 
 void Merge(ElementType A[], ElementType TmpArray[], int Lpos, int Rpos,
 		int RightEnd) {
-	int i, LeftEnd, NumElements, TmpPos;
+	const int SPACE = 2* sizeof(ElementType) + 3*sizeof(int);
+	Resource_logSpace(SPACE);
 
-	LeftEnd = Rpos - 1;
-	TmpPos = Lpos;
-	NumElements = RightEnd - Lpos + 1;
+	int i, LeftEnd, NumElements, TmpPos; //4
 
-    Resource_logTime(6);
+	LeftEnd = Rpos - 1; //2
+	TmpPos = Lpos; //1
+	NumElements = RightEnd - Lpos + 1; //3
+
 	/* main loop */
-	while (Lpos <= LeftEnd && Rpos <= RightEnd){
-		if (A[Lpos] <= A[Rpos])
-			TmpArray[TmpPos++] = A[Lpos++];
+	while (Lpos <= LeftEnd && Rpos <= RightEnd){ //3
+
+		if (A[Lpos] <= A[Rpos]) //3
+			TmpArray[TmpPos++] = A[Lpos++]; //7
 		else
 			TmpArray[TmpPos++] = A[Rpos++];
-        Resource_logTime(7);
+        Resource_logTime(13);
 	}
 
-	while (Lpos <= LeftEnd){ /* Copy rest of first half */
-		TmpArray[TmpPos++] = A[Lpos++];
-		Resource_logTime(7);
+	while (Lpos <= LeftEnd){ /* Copy rest of first half */ //1
+		TmpArray[TmpPos++] = A[Lpos++]; //7
+		Resource_logTime(8);
 	}
-	while (Rpos <= RightEnd){ /* Copy rest of second half */
-		TmpArray[TmpPos++] = A[Rpos++];
-		Resource_logTime(7);
+	while (Rpos <= RightEnd){ /* Copy rest of second half */ //1
+		TmpArray[TmpPos++] = A[Rpos++]; //7
+		Resource_logTime(8);
 	}
 
 	/* Copy TmpArray back */
-	for (i = 0; i < NumElements; i++, RightEnd--){
-		A[RightEnd] = TmpArray[RightEnd];
-        Resource_logTime(3);
+	for (i = 0; i < NumElements; i++, RightEnd--){ //5
+		A[RightEnd] = TmpArray[RightEnd]; //3
+        Resource_logTime(8);
 	}
+	Resource_logTime(12);
+	Resource_logSpace(-SPACE);
 }
 /* END */
 
 /* START: fig7_9.txt */
 void MSort(ElementType A[], ElementType TmpArray[], int Left, int Right) {
-	int Center;
-    Resource_logTime(1);
+	const int SPACE = 2* sizeof(ElementType) + 2*sizeof(int);
+	Resource_logSpace(SPACE);
 
-	if (Left < Right) {
-		Center = (Left + Right) / 2;
-		Resource_logTime(4);
+	int Center; //1
+
+	if (Left < Right) { //1
+		Center = (Left + Right) / 2; //4
+		Resource_logTime(5);
 		MSort(A, TmpArray, Left, Center);
 		MSort(A, TmpArray, Center + 1, Right);
 		Merge(A, TmpArray, Left, Center + 1, Right);
 	}
+	Resource_logTime(4);
+	Resource_logSpace(-SPACE);
 }
 
 void mergesort(ElementType A[], int N) {
-	ElementType *TmpArray;
+    Resource_logSpace(SPACE_ELEMENT_INT);
+
+	ElementType *TmpArray; //1
 	TmpArray = malloc(N * sizeof(ElementType));
-	Resource_logSpace(N*sizeof(ElementType));
-	if (TmpArray != NULL) {
+	Resource_logSpace(N * sizeof(ElementType));
+	if (TmpArray != NULL) { //1
 		MSort(A, TmpArray, 0, N - 1);
-		free(TmpArray);
+		free(TmpArray); //1
+		Resource_logTime(1);
 		Resource_logSpace(-N*sizeof(ElementType));
 	} else
 		fatalError( "No space for tmp array!!!" );
+    Resource_logTime(4);
+    Resource_logSpace(-SPACE_ELEMENT_INT);
 }
 /* END */
 
@@ -221,18 +261,29 @@ void mergesort(ElementType A[], int N) {
 /* Order these and hide the pivot */
 
 ElementType Median3(ElementType A[], int Left, int Right) {
-	int Center = (Left + Right) / 2;
+	const int SPACE = sizeof(ElementType) + 2*sizeof(int);
+	Resource_logSpace(SPACE);
 
-	if (A[Left] > A[Center])
-		Swap(&A[Left], &A[Center]);
-	if (A[Left] > A[Right])
-		Swap(&A[Left], &A[Right]);
-	if (A[Center] > A[Right])
-		Swap(&A[Center], &A[Right]);
+	int Center = (Left + Right) / 2; //3
 
+	if (A[Left] > A[Center]){ //3
+		Swap(&A[Left], &A[Center]); //4
+		Resource_logTime(4);
+	}
+	if (A[Left] > A[Right]){ //3
+		Swap(&A[Left], &A[Right]); //4
+		Resource_logTime(4);
+	}
+	if (A[Center] > A[Right]){ //3
+		Swap(&A[Center], &A[Right]); //4
+		Resource_logTime(4);
+	}
 	/* Invariant: A[ Left ] <= A[ Center ] <= A[ Right ] */
 
-	Swap(&A[Center], &A[Right - 1]); /* Hide pivot */
+	Swap(&A[Center], &A[Right - 1]); /* Hide pivot */ //5
+
+    Resource_logTime(19);
+	Resource_logSpace(-SPACE);
 	return A[Right - 1]; /* Return pivot */
 }
 /* END */
@@ -241,35 +292,47 @@ ElementType Median3(ElementType A[], int Left, int Right) {
 #define Cutoff ( 3 )
 
 void Qsort(ElementType A[], int Left, int Right) {
-	int i, j;
-	ElementType Pivot;
+	const int SPACE = sizeof(ElementType) + 2*sizeof(int);
+	Resource_logSpace(SPACE);
 
-	/* 1*/if (Left + Cutoff <= Right) {
-		/* 2*/Pivot = Median3(A, Left, Right);
-		/* 3*/
-		i = Left;
-		j = Right - 1;
-		/* 4*/
+	int i, j; //2
+	ElementType Pivot; //1
+
+	if (Left + Cutoff <= Right) { //2
+		Pivot = Median3(A, Left, Right); //1
+
+		i = Left; //1
+		j = Right - 1; //2
+
 		for (;;) {
-			/* 5*/while (A[++i] < Pivot) {
+			while (A[++i] < Pivot) { //4
+			    Resource_logTime(4);
 			}
-			/* 6*/
-			while (A[--j] > Pivot) {
-			}
-			/* 7*/if (i < j)
-				/* 8*/Swap(&A[i], &A[j]);
-			else
-				/* 9*/break;
-		}
-		/*10*/
-		Swap(&A[i], &A[Right - 1]); /* Restore pivot */
 
-		/*11*/
-		Qsort(A, Left, i - 1);
-		/*12*/Qsort(A, i + 1, Right);
-	} else
+			while (A[--j] > Pivot) {
+			    Resource_logTime(4);
+			}
+			if (i < j){ //1
+				Swap(&A[i], &A[j]); //4
+				Resource_logTime(5);
+			}
+			else{
+				Resource_logTime(1);
+				break;
+			}
+		}
+		Swap(&A[i], &A[Right - 1]); /* Restore pivot */ //5
+
+		Qsort(A, Left, i - 1); //1
+		Qsort(A, i + 1, Right); //1
+		Resource_logTime(11);
+	} else{
 		/* Do an insertion sort on the subarray */
-		/*13*/insertionSort(A + Left, Right - Left + 1);
+		insertionSort(A + Left, Right - Left + 1); // 3
+		Resource_logTime(3);
+	}
+	Resource_logTime(7);
+    Resource_logSpace(-SPACE);
 }
 /* END */
 
@@ -291,7 +354,9 @@ void Qsort(ElementType A[], int Left, int Right) {
 
 /* START: fig7_12.txt */
 void quicksort(ElementType A[], int N) {
+	Resource_logSpace(SPACE_ELEMENT_INT);
 	Qsort(A, 0, N - 1);
+    Resource_logSpace(-SPACE_ELEMENT_INT);
 }
 /* END */
 
@@ -299,36 +364,38 @@ void quicksort(ElementType A[], int N) {
 /* Places the kth smallest element in the kth position */
 /* Because arrays start at 0, this will be index k-1 */
 void Qselect(ElementType A[], int k, int Left, int Right) {
-	int i, j;
-	ElementType Pivot;
+	const int SPACE = sizeof(ElementType) + 3*sizeof(int);
+	Resource_logSpace(SPACE);
 
-	/* 1*/if (Left + Cutoff <= Right) {
-		/* 2*/Pivot = Median3(A, Left, Right);
-		/* 3*/
-		i = Left;
-		j = Right - 1;
-		/* 4*/
+	int i, j; //2
+	ElementType Pivot; //2
+
+	if (Left + Cutoff <= Right) { //2
+		Pivot = Median3(A, Left, Right); //1
+
+		i = Left; //1
+		j = Right - 1; //2
 		for (;;) {
-			/* 5*/while (A[++i] < Pivot) {
+			while (A[++i] < Pivot) {
 			}
-			/* 6*/
 			while (A[--j] > Pivot) {
 			}
-			/* 7*/if (i < j)
-				/* 8*/Swap(&A[i], &A[j]);
+			if (i < j)
+				Swap(&A[i], &A[j]);
 			else
-				/* 9*/break;
+				break;
 		}
-		/*10*/
 		Swap(&A[i], &A[Right - 1]); /* Restore pivot */
 
-		/*11*/if (k <= i)
-			/*12*/Qselect(A, k, Left, i - 1);
-		/*13*/else if (k > i + 1)
-			/*14*/Qselect(A, k, i + 1, Right);
+		if (k <= i)
+			Qselect(A, k, Left, i - 1);
+		else if (k > i + 1)
+			Qselect(A, k, i + 1, Right);
 	} else
 		/* Do an insertion sort on the subarray */
-		/*15*/insertionSort(A + Left, Right - Left + 1);
+		insertionSort(A + Left, Right - Left + 1);
+
+	Resource_logSpace(-SPACE);
 }
 /* END */
 
@@ -364,15 +431,15 @@ void reverseCopy(ElementType lhs[], const ElementType rhs[], int n){
 
 }
 
-#define MaxSize 7000
+#define MaxSize 30000
 int Arr1[MaxSize];
 int Arr2[MaxSize];
 int arr3[MaxSize];
 
 void Sort_test() {
-    const int START=10;
-    const int END=1000;
-    const int STEP=10;
+    int START=10;
+    int END=1000;
+    int STEP=10;
 	int i;
 
 	// test radix exchange sort
@@ -411,6 +478,11 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
+
+    START=200;
+    END=MaxSize;
+    STEP=200;
+
     Resource_startTrack("sort","heap-sort");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
@@ -438,24 +510,40 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-/*
+//    Resource_setMode(1);
+    Resource_startTrack("sort","shell-sort");
+	for(i=START;i<=END;i+=STEP){
+        Copy(Arr1, Arr2, i);
+        Resource_clearData();
+        shellsort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+    Resource_setMode(0);
+
+
    // --------------Time------------------
-    char* list0[] = {"List_makeEmpty","List_find-worst-case"};
-    Resource_writePlotScript("List0",list0,2,0);
+    char* list0[] = {"insertion-sort","insertion-sort-worst-case"};
+    Resource_writePlotScript("quadratic",list0,2,0);
 
-    char* list1[] = {"List_deleteList"};
-    Resource_writePlotScript("List_deleteList", list1,1,0);
+    char* list1[] = {"insertion-sort-best-case"};
+    Resource_writePlotScript("insertion-best", list1,1,0);
 
-    char* opConstant[] = {"List_isEmpty","List_isLast", "List_delete-worst-case", "List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
-    Resource_writePlotScript("List_constant",opConstant,9,0);
+    char* time2[] = {"shell-sort"};
+    Resource_writePlotScript("shell-sort", time2, 1, 0);
+
 
     //---------------space----------------
-    char* list2[] = {"List_makeEmpty","List_deleteList"};
-    Resource_writePlotScript("List_linear",list2,2,1);
+    char* list2[] = {"insertion-sort","heap-sort","shell-sort"};
+    Resource_writePlotScript("constant",list2,3,1);
 
-    char* list3[] = {"List_isEmpty","List_isLast","List_find-worst-case","List_delete-worst-case","List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
-    Resource_writePlotScript("List_constant",list3,10,1);
-*/
+    char* space1[] = {"quick-sort"};
+    Resource_writePlotScript("quick-sort", space1,1,1);
+
+    char* space2[] = {"merge-sort"};
+    Resource_writePlotScript("merge-sort", space2,1,1);
+
+
     Resource_writeTableData("Sort");
 
 /*

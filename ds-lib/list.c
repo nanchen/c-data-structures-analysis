@@ -10,9 +10,13 @@
             ListPosition    Next;
         };
 
+        const int SPACE_LIST = sizeof(List);
+        const int SPACE_LIST_POS = sizeof(ListPosition);
+
         List
         List_makeEmpty( List L )
         {
+            Resource_logSpace(SPACE_LIST);
             if( L != NULL ) // 1
                 List_deleteList( L );
             L = malloc( sizeof( struct Node ) ); // 4
@@ -22,7 +26,8 @@
                 Resource_logTime(1);
             }
             L->Next = NULL; // 2
-            Resource_logTime(8);
+            Resource_logTime(10);
+            Resource_logSpace(-SPACE_LIST);
             return L;
         }
 
@@ -32,8 +37,10 @@
         int
         List_isEmpty( List L )
         {
-            Resource_logTime(3);
-            return L->Next == NULL;
+            Resource_logSpace(SPACE_LIST);
+            Resource_logTime(4);
+            Resource_logSpace(-SPACE_LIST);
+            return L->Next == NULL; //3
         }
 /* END */
 
@@ -43,7 +50,10 @@
 
         int List_isLast( ListPosition P, List L )
         {
-            Resource_logTime(3);
+            const int SPACE = sizeof(List) + sizeof(ListPosition);
+            Resource_logSpace(SPACE);
+            Resource_logTime(4);
+            Resource_logSpace(-SPACE);
             return P->Next == NULL;
         }
 /* END */
@@ -54,6 +64,8 @@
         ListPosition
         List_find( ListElement X, List L )
         {
+            const int SPACE = sizeof(ListElement) + sizeof(List);
+            Resource_logSpace(SPACE);
             ListPosition P; //1
 
 /* 1*/      P = L->Next; //2
@@ -61,7 +73,9 @@
 /* 3*/          P = P->Next; //2
                 Resource_logTime(2);
             }
-            Resource_logTime(8);
+            Resource_logTime(9);
+            Resource_logSpace(-SPACE);
+
 /* 4*/      return P; //1
         }
 /* END */
@@ -75,6 +89,8 @@
         void
         List_delete( ListElement X, List L )
         {
+            const int SPACE = sizeof(ListElement) + sizeof(List);
+            Resource_logSpace(SPACE);
             ListPosition P, TmpCell; //2
 
             P = List_findPrevious( X, L ); //1
@@ -87,7 +103,8 @@
                 Resource_logSpace(-sizeof(struct Node));
                 Resource_logTime(6);
             }
-            Resource_logTime(6);
+            Resource_logTime(7);
+            Resource_logSpace(-SPACE);
         }
 /* END */
 
@@ -98,6 +115,8 @@
         ListPosition
         List_findPrevious( ListElement X, List L )
         {
+            const int SPACE = sizeof(ListElement) + sizeof(List);
+            Resource_logSpace(SPACE);
             ListPosition P; //1
 
 /* 1*/      P = L; //1
@@ -105,7 +124,8 @@
 /* 3*/          P = P->Next; //2
                 Resource_logTime(2);
             }
-            Resource_logTime(9);
+            Resource_logTime(10);
+            Resource_logSpace(-SPACE);
 /* 4*/      return P; //1
         }
 /* END */
@@ -118,6 +138,8 @@
         void
         List_insert( ListElement X, List L, ListPosition P )
         {
+            const int SPACE = sizeof(ListElement) + sizeof(List) + sizeof(ListPosition);
+            Resource_logSpace(SPACE);
             ListPosition TmpCell; //1
 
 /* 1*/      TmpCell = malloc( sizeof( struct Node ) ); //3
@@ -128,7 +150,8 @@
 /* 4*/      TmpCell->Element = X; //2
 /* 5*/      TmpCell->Next = P->Next; //3
 /* 6*/      P->Next = TmpCell; //2
-            Resource_logTime(12);
+            Resource_logTime(14);
+            Resource_logSpace(-SPACE);
         }
 /* END */
 
@@ -139,6 +162,7 @@
         void
         List_deleteList( List L )
         {
+            Resource_logSpace(SPACE_LIST);
             ListPosition P;
 
 /* 1*/      P = L->Next;  /* List_header assumed */
@@ -148,6 +172,7 @@
 /* 4*/          free( P );
 /* 5*/          P = P->Next;
             }
+            Resource_logSpace(-SPACE_LIST);
         }
 /* END */
 #endif
@@ -158,6 +183,7 @@
         void
         List_deleteList( List L )
         {
+            Resource_logSpace(SPACE_LIST);
             ListPosition P, Tmp; //2
 
 /* 1*/      P = L->Next;  /* List_header assumed */ // 2
@@ -171,25 +197,31 @@
 //                printf("List_deleteList(), sizeof(P) = %d\n", sizeof(P));
                 Resource_logSpace(-sizeof(struct Node));
             }
-            Resource_logTime(7);
+            Resource_logTime(9);
+            Resource_logSpace(-SPACE_LIST);
         }
 /* END */
 
         ListPosition
         List_header( List L )
         {
-            Resource_logTime(1);
+            Resource_logSpace(SPACE_LIST);
+            Resource_logTime(2);
             return L;
+            Resource_logSpace(-SPACE_LIST);
         }
 
         ListPosition
         List_first( List L )
         {
-            Resource_logTime(2);
+            Resource_logSpace(SPACE_LIST);
+            Resource_logTime(3);
             return L->Next;
+            Resource_logSpace(-SPACE_LIST);
         }
 
         ListPosition List_last(List L){
+            Resource_logSpace(SPACE_LIST);
             ListPosition P; //1
 
             P = L->Next; //2
@@ -197,20 +229,25 @@
                 P = P->Next; //2
                 Resource_logTime(2);
             }
-            Resource_logTime(8);
+            Resource_logTime(9);
+            Resource_logSpace(-SPACE_LIST);
             return P; //1
         }
 
         ListPosition
         List_advance( ListPosition P )
         {
-            Resource_logTime(2);
+            Resource_logSpace(SPACE_LIST_POS);
+            Resource_logTime(3);
+            Resource_logSpace(-SPACE_LIST_POS);
             return P->Next;
         }
 
         ListElement
         List_retrieve( ListPosition P )
         {
-            Resource_logTime(2);
+            Resource_logSpace(SPACE_LIST_POS);
+            Resource_logTime(3);
+            Resource_logSpace(-SPACE_LIST_POS);
             return P->Element;
         }

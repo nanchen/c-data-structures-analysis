@@ -1,5 +1,27 @@
 #include "avltree.h"
+#include "testavl.h"
+#include "resourcetrack.h"
+
 #include <stdio.h>
+
+void AVLTree_testPerformance(){
+    int START=10;
+    int END=1000;
+    int STEP=10;
+
+    Resource_initilizeOperationArray();
+
+	Permute(Arr2, MaxSize);
+    Resource_startTrack("sort","insertion-sort");
+	for(i=START;i<=END;i+=STEP){
+        Copy(Arr1, Arr2, i);
+        Resource_clearData();
+        insertionSort(Arr1, i);
+        Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+}
+
 
 AVLTree_test()
 {

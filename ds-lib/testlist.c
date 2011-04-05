@@ -27,8 +27,7 @@ List createTestList(int size){
 	}
 	return l;
 }
-ListElement last(){
-}
+
 
 int List_test(void) {
     const int START=10;
