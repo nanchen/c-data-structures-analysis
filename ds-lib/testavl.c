@@ -1,25 +1,116 @@
 #include "avltree.h"
 #include "testavl.h"
 #include "resourcetrack.h"
+#include "sort.h";
 
 #include <stdio.h>
 
+int data[10000];
+
+AvlTree createTestTree(int size){
+    int i;
+
+    AvlTree T = AVLTree_makeEmpty( NULL );
+    for( i = 0; i < size; i++)
+        T = AVLTree_insert( data[i], T );
+    return T;
+}
+
 void AVLTree_testPerformance(){
-    int START=10;
-    int END=1000;
+    int START=100;
+    int END=2000;
     int STEP=10;
+    int i;
+
+    permute(data, 10000);
+    int inserted = data[5000];
+    //quicksort(data, 10000);
 
     Resource_initilizeOperationArray();
 
-	Permute(Arr2, MaxSize);
-    Resource_startTrack("sort","insertion-sort");
-	for(i=START;i<=END;i+=STEP){
-        Copy(Arr1, Arr2, i);
+    Resource_startTrack("avltree","insert-average-case");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
         Resource_clearData();
-        insertionSort(Arr1, i);
+        tree = AVLTree_insert( data[i], tree);
+        Resource_storeData(i);
+        AVLTree_makeEmpty(tree);
+	}
+	Resource_analyseSequence();
+
+    Resource_startTrack("avltree","make-empty");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
+        Resource_clearData();
+        AVLTree_makeEmpty(tree);
         Resource_storeData(i);
 	}
 	Resource_analyseSequence();
+
+    Resource_startTrack("avltree","find");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
+        Resource_clearData();
+        AVLTree_find( data[i-1], tree);
+        Resource_storeData(i);
+        AVLTree_makeEmpty(tree);
+	}
+	Resource_analyseSequence();
+
+    Resource_startTrack("avltree","find-min");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
+        Resource_clearData();
+        int ret = AVLTree_retrieve(AVLTree_findMin(tree));
+        //printf("min = %d\n", ret);
+        Resource_storeData(i);
+        AVLTree_makeEmpty(tree);
+	}
+	Resource_analyseSequence();
+
+    Resource_startTrack("avltree","find-max");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
+        Resource_clearData();
+        int ret = AVLTree_retrieve(AVLTree_findMax(tree));
+    //    printf("max= %d\n", ret);
+        Resource_storeData(i);
+        AVLTree_makeEmpty(tree);
+	}
+	Resource_analyseSequence();
+
+    Resource_startTrack("avltree","retrieve");
+	for(i=START;i<END;i+=STEP){
+        AvlTree tree = createTestTree(i);
+        Position p = AVLTree_find( data[i-1], tree);
+      //  printf("try to retrieve %d result pointer = %d\n", data[i],p);
+        Resource_clearData();
+        int ret = AVLTree_retrieve(p);
+        //printf("retrived: %d\n", ret);
+        Resource_storeData(i);
+        AVLTree_makeEmpty(tree);
+	}
+	Resource_analyseSequence();
+
+    // --------------Time------------------
+    char* time0[] = {"insert-average-case"};
+    Resource_writePlotScript("insert",time0,1,0,1);
+    char* time1[] = {"make-empty"};
+    Resource_writePlotScript("make-empty",time1,1,0,0);
+    char* time2[] = {"find" ,"find-min","find-max"};
+    Resource_writePlotScript("find",time2,3,0,1);
+    char* time3[] = {"retrieve"};
+    Resource_writePlotScript("retrieve",time3,1,0,0);
+
+
+    // ------------space-------------
+    Resource_writePlotScript("insert",time0,1,1,1);
+    Resource_writePlotScript("make-empty",time1,1,1,0);
+    char* space0[] = {"find", "find-min", "find-max", "retrieve"};
+    Resource_writePlotScript("constant",space0,4,1,0);
+
+    // table
+    Resource_writeTableData("AVLTree");
 }
 
 

@@ -452,7 +452,7 @@ void Sort_test() {
     Resource_initilizeOperationArray();
 
 	Permute(Arr2, MaxSize);
-    Resource_startTrack("sort","insertion-sort");
+    Resource_startTrack("sort","insertion-sort-average-case");
 	for(i=START;i<=END;i+=STEP){
         Copy(Arr1, Arr2, i);
         Resource_clearData();
@@ -523,25 +523,32 @@ void Sort_test() {
 
 
    // --------------Time------------------
-    char* list0[] = {"insertion-sort","insertion-sort-worst-case"};
-    Resource_writePlotScript("quadratic",list0,2,0);
+    char* list0[] = {"insertion-sort-average-case","insertion-sort-worst-case"};
+    Resource_writePlotScript("quadratic",list0,2,0, 0);
 
     char* list1[] = {"insertion-sort-best-case"};
-    Resource_writePlotScript("insertion-best", list1,1,0);
+    Resource_writePlotScript("insertion-best", list1,1,0,0);
 
     char* time2[] = {"shell-sort"};
-    Resource_writePlotScript("shell-sort", time2, 1, 0);
+    Resource_writePlotScript("shell-sort", time2, 1, 0,0);
+
+    char* time3[] = {"quick-sort"};
+    Resource_writePlotScript("quick-sort", time3, 1, 0,0);
 
 
     //---------------space----------------
-    char* list2[] = {"insertion-sort","heap-sort","shell-sort"};
-    Resource_writePlotScript("constant",list2,3,1);
+    char* list2[] = {"insertion-sort-average-case","heap-sort","shell-sort"};
+    Resource_writePlotScript("constant",list2,3,1,0);
 
     char* space1[] = {"quick-sort"};
-    Resource_writePlotScript("quick-sort", space1,1,1);
+    Resource_writePlotScript("quick-sort", space1,1,1,0);
+    Resource_writePlotScript("quick-sort", space1,1,1,1);
 
     char* space2[] = {"merge-sort"};
-    Resource_writePlotScript("merge-sort", space2,1,1);
+    Resource_writePlotScript("merge-sort", space2,1,1,0);
+
+    char* space3[] = {"shell-sort"};
+    Resource_writePlotScript("shell-sort", space3,1,1,0);
 
 
     Resource_writeTableData("Sort");

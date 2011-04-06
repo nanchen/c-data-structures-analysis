@@ -1,0 +1,9 @@
+./plot.sh quadratic-time.plt time
+./plot.sh insertion-best-time.plt time
+./plot.sh shell-sort-time.plt time
+./plot.sh quick-sort-time.plt time
+./plot.sh constant-space.plt space
+./plot.sh merge-sort-space.plt space
+./plot.sh quick-sort-space.plt space
+./plot.sh quick-sort-space-logscaley.plt space
+./plot.sh shell-sort-space.plt space

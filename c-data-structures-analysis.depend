@@ -31,7 +31,7 @@
 	"aatree.h"
 	<stdio.h>
 
-1301876346 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
+1302041127 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.c
 	<stdio.h>
 	"list.h"
 	"resourcetrack.h"
@@ -42,7 +42,7 @@
 
 1299696535 source:/home/nan/chen-work/c-data-structures-analysis/main.c
 
-1301956864 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
+1302045443 source:/home/nan/chen-work/c-data-structures-analysis/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<sys/times.h>
@@ -50,14 +50,15 @@
 	"../ds-lib/testque.h"
 	"../ds-lib/testtree.h"
 	"../ds-lib/sort.h"
+	"../ds-lib/testavl.h"
 
 1300801628 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testlist.h
 
 1300801570 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testque.h
 
-1300818363 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
+1302034381 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
 
-1301964805 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
+1302041512 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
 	<stdlib.h>
 	<math.h>
 	"fatal.h"
@@ -80,12 +81,13 @@
 
 1300795912 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resource-track.h
 
-1300801891 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.c
+1302034488 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.c
 	"avltree.h"
-	<stdlib.h>
 	"fatal.h"
+	"resourcetrack.h"
+	<stdlib.h>
 
-1300798839 /home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.h
+1302034488 /home/nan/chen-work/c-data-structures-analysis/ds-lib/avltree.h
 
 1300801891 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.c
 	"binheap.h"
@@ -94,8 +96,11 @@
 
 1300799704 /home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.h
 
-1300801849 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
+1302044299 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
 	"avltree.h"
+	"testavl.h"
+	"resourcetrack.h"
+	"sort.h"
 	<stdio.h>
 
 1300821306 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testtree.c
@@ -107,7 +112,7 @@
 	"binheap.h"
 	<stdio.h>
 
-1301962484 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
+1302047569 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -115,7 +120,7 @@
 	<sys/stat.h>
 	"resourcetrack.h"
 
-1301962189 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.h
+1302040883 /home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.h
 	<time.h>
 	<stdbool.h>
 	"list.h"
@@ -131,4 +136,11 @@
 	"hashsep.h"
 	"hashquad.h"
 	<stdio.h>
+
+1302028788 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.h
+
+1302033851 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testutil.c
+	"testutil.h"
+
+1302033844 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testutil.h
 

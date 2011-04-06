@@ -1,0 +1,8 @@
+Operation	Empirical time	Time RSD	Analytical time	Comparision	Empirical space	Space RSD	Analytical space	Comparision
+insertion-sort-average-case	Time(N) = 2.80 * N^2	6.61%	 O(N^2)	EQUAL 	Space(N) = 8.00		 O(1)	EQUAL
+insertion-sort-best-case	Time(N) = 6.99 * N	0.33%	 O(N)	EQUAL 	Space(N) = 8.00		 O(1)	EQUAL
+insertion-sort-worst-case	Time(N) = 5.51 * N^2	0.28%	 O(N^2)	EQUAL 	Space(N) = 8.00		 O(1)	EQUAL
+heap-sort	Time(N) = 13.75 * NlogN	0.23%	 O(N * logN)	EQUAL 	Space(N) = 20.00		 O(1)	EQUAL
+merge-sort	Time(N) = 22.49 * NlogN	0.87%	 O(N * logN)	EQUAL 	Space(N) = 4.04 * N	1.98%	 O(N)	EQUAL
+quick-sort	Time(N) = 7.41 * NlogN	2.42%	 O(N * logN)	EQUAL 	Space(N) = 22.59 * logN	5.82%	 O(logN)	EQUAL
+shell-sort	Time(N) = 19.13 * NlogN	15.27%	 O(N * logN)	EQUAL 	Space(N) = 8.00		 O(1)	EQUAL

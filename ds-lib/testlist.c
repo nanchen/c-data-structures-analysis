@@ -171,20 +171,20 @@ int List_test(void) {
 
     // --------------Time------------------
     char* list0[] = {"List_makeEmpty","List_find-worst-case"};
-    Resource_writePlotScript("List0",list0,2,0);
+    Resource_writePlotScript("List0",list0,2,0,0);
 
     char* list1[] = {"List_deleteList"};
-    Resource_writePlotScript("List_deleteList", list1,1,0);
+    Resource_writePlotScript("List_deleteList", list1,1,0,0);
 
     char* opConstant[] = {"List_isEmpty","List_isLast", "List_delete-worst-case", "List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
-    Resource_writePlotScript("List_constant",opConstant,9,0);
+    Resource_writePlotScript("List_constant",opConstant,9,0,0);
 
     //---------------space----------------
     char* list2[] = {"List_makeEmpty","List_deleteList"};
-    Resource_writePlotScript("List_linear",list2,2,1);
+    Resource_writePlotScript("List_linear",list2,2,1,0);
 
     char* list3[] = {"List_isEmpty","List_isLast","List_find-worst-case","List_delete-worst-case","List_findPrevious-worst-case","List_insert-worst-case","List_header","List_first","List_advance","List_retrieve"};
-    Resource_writePlotScript("List_constant",list3,10,1);
+    Resource_writePlotScript("List_constant",list3,10,1,0);
 
     Resource_writeTableData("List");
 

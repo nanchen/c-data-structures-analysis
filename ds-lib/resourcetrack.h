@@ -17,7 +17,7 @@ unsigned long totalTime;
 long totalSpace;
 long maxSpace;
 List resourceList;
-enum ComplexityClass{N2, NLOGN, N, N0};
+enum ComplexityClass{N2, NLOGN, N, LOGN, N0};
 struct Operation{
     char* name;
     char* path;
@@ -44,6 +44,6 @@ void Resource_clearData();
 void Resource_storeData(unsigned int size);
 struct CalcResult* Resource_analyse(unsigned int size, unsigned long time, long space);
 void Resource_analyseSequence();
-void Resource_writePlotScript(const char* scriptName, char* opList[], int opListLength, int type);
+void Resource_writePlotScript(const char* scriptName, char* opList[], int opListLength, int type, int logScale);
 void Resource_writeTableData(const char* tableName);
 #endif /* RESOURCE_TRACK_H_ */
