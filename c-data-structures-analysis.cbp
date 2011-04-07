@@ -56,6 +56,17 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/binheap.h" />
+		<Unit filename="ds-lib/binomial.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/binomial.h" />
+		<Unit filename="ds-lib/disjsets.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/dsl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/dsl.h" />
 		<Unit filename="ds-lib/fatal.h" />
 		<Unit filename="ds-lib/hashsep.c">
 			<Option compilerVar="CC" />
@@ -69,6 +80,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/queue.h" />
+		<Unit filename="ds-lib/redblack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/redblack.h" />
 		<Unit filename="ds-lib/resourcetrack.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -77,11 +92,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/sort.h" />
+		<Unit filename="ds-lib/stackar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/stackar.h" />
 		<Unit filename="ds-lib/testaa.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testaa.h" />
 		<Unit filename="ds-lib/testavl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testavl.h" />
+		<Unit filename="ds-lib/testbin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testdsl.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testhash.c">
@@ -98,10 +124,20 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testque.h" />
+		<Unit filename="ds-lib/testrb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/teststka.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="ds-lib/testtree.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ds-lib/testtree.h" />
+		<Unit filename="ds-lib/testutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ds-lib/testutil.h" />
 		<Unit filename="ds-lib/tree.c">
 			<Option compilerVar="CC" />
 		</Unit>

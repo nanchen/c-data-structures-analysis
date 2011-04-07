@@ -682,6 +682,7 @@ void Resource_writeTableData(const char* tableName) {
 		// time
 		char** funcArr = getFunctionInfo(op->timeComplexity, op->timeConstant,
 				op->timeDeviation);
+
 		strcat(data, op->name);
 		strcat(data, "\tTime(N) = ");
 		strcat(data, *(funcArr + 1));

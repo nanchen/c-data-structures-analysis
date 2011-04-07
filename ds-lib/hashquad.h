@@ -1,16 +1,13 @@
-/* Interface for separate chaining hash table */
+/* Interface for quadratic probing hash table */
 typedef int ElementType;
 
-/* START: fig5_2.txt */
+/* START: fig5_14.txt */
+        #ifndef _HashQuad_H
+        #define _HashQuad_H
+
         typedef unsigned int Index;
-/* END */
+        typedef Index Position;
 
-/* START: fig5_7.txt */
-        #ifndef _HashSep_H
-        #define _HashSep_H
-
-        struct ListNode;
-        typedef struct ListNode *Position;
         struct HashTbl;
         typedef struct HashTbl *HashTable;
 
@@ -18,8 +15,10 @@ typedef int ElementType;
         void Hash_destroyTable( HashTable H );
         Position Hash_find( ElementType Key, HashTable H );
         void Hash_insert( ElementType Key, HashTable H );
-        ElementType Hash_retrieve( Position P );
+        ElementType Hash_retrieve( Position P, HashTable H );
+        HashTable Hash_rehash( HashTable H );
         /* Routines such as Hash_delete are Hash_makeEmpty are omitted */
 
-        #endif  /* _HashSep_H */
+        #endif  /* _HashQuad_H */
+
 /* END */

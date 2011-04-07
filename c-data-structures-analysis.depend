@@ -58,7 +58,7 @@
 
 1302034381 /home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.h
 
-1302041512 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
+1302210496 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/sort.c
 	<stdlib.h>
 	<math.h>
 	"fatal.h"
@@ -96,7 +96,7 @@
 
 1300799704 /home/nan/chen-work/c-data-structures-analysis/ds-lib/binheap.h
 
-1302044299 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
+1302049062 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testavl.c
 	"avltree.h"
 	"testavl.h"
 	"resourcetrack.h"
@@ -112,7 +112,7 @@
 	"binheap.h"
 	<stdio.h>
 
-1302047569 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
+1302092773 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/resourcetrack.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -125,14 +125,14 @@
 	<stdbool.h>
 	"list.h"
 
-1301430230 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.c
+1302210502 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.c
 	"fatal.h"
 	"hashsep.h"
 	<stdlib.h>
 
-1301416460 /home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.h
+1302183130 /home/nan/chen-work/c-data-structures-analysis/ds-lib/hashsep.h
 
-1301430157 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testhash.c
+1302209975 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testhash.c
 	"hashsep.h"
 	"hashquad.h"
 	<stdio.h>
@@ -143,4 +143,95 @@
 	"testutil.h"
 
 1302033844 /home/nan/chen-work/c-data-structures-analysis/ds-lib/testutil.h
+
+1302209996 /home/nan/chen-work/c-data-structures-analysis/ds-lib/hashquad.h
+
+1302183926 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/binomial.c
+	"binomial.h"
+	"fatal.h"
+
+1302183926 /home/nan/chen-work/c-data-structures-analysis/ds-lib/binomial.h
+
+1302210609 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/disjsets.c
+
+1302210521 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/dsl.c
+	"dsl.h"
+	<stdlib.h>
+	"fatal.h"
+
+1302184378 /home/nan/chen-work/c-data-structures-analysis/ds-lib/dsl.h
+	<stdlib.h>
+	"fatal.h"
+
+839878061 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/hashquad.c
+	"fatal.h"
+	"hashquad.h"
+	<stdlib.h>
+
+1302182938 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/listcursor.c
+	"listcursor.h"
+	<stdlib.h>
+	"fatal.h"
+
+1302182938 /home/nan/chen-work/c-data-structures-analysis/ds-lib/listcursor.h
+
+1302210542 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/redblack.c
+	"redblack.h"
+	<stdlib.h>
+	"fatal.h"
+
+1302183211 /home/nan/chen-work/c-data-structures-analysis/ds-lib/redblack.h
+	<stdlib.h>
+	"fatal.h"
+
+1302183497 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/stackar.c
+	"stackar.h"
+	"fatal.h"
+	<stdlib.h>
+
+1302183497 /home/nan/chen-work/c-data-structures-analysis/ds-lib/stackar.h
+
+1302183650 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/stackli.c
+	"stackli.h"
+	"fatal.h"
+	<stdlib.h>
+
+1302183650 /home/nan/chen-work/c-data-structures-analysis/ds-lib/stackli.h
+
+1300799787 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testbin.c
+	"binomial.h"
+	<stdio.h>
+
+1302210241 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testdsl.c
+	"dsl.h"
+	<stdio.h>
+
+1302210270 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testrb.c
+	"redblack.h"
+	<stdio.h>
+
+1302183651 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/teststkl.c
+	<stdio.h>
+	"stackli.h"
+
+1302184254 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testtrp.c
+	"treap.h"
+	<stdio.h>
+
+1302184255 /home/nan/chen-work/c-data-structures-analysis/ds-lib/treap.h
+	<stdlib.h>
+	"fatal.h"
+
+1302184255 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/treap.c
+	"treap.h"
+	<stdlib.h>
+	"fatal.h"
+
+1302209433 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/testlistcurs.c
+	<stdio.h>
+	"listcursor.h"
+
+1302209411 source:/home/nan/chen-work/c-data-structures-analysis/ds-lib/teststka.c
+	<stdio.h>
+	"stackar.h"
 

@@ -82,7 +82,7 @@
 
 /* 6*/      for( i = 1; i * 2 <= H->Size; i = Child )
             {
-                /* Find smaller child */
+                /* find smaller child */
 /* 7*/          Child = i * 2;
 /* 8*/          if( Child != H->Size && H->Elements[ Child + 1 ]
 /* 9*/                                < H->Elements[ Child ] )

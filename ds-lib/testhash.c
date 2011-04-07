@@ -28,7 +28,7 @@ Hash_test( )
     #ifdef QuadProb
         if( i > CurrentSize / 2 )
         {
-            H = Rehash( H );
+            H = Hash_rehash( H );
             printf( "Rehashing...\n" );
             CurrentSize *= 2;
         }
