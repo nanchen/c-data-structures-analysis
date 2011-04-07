@@ -1,6 +1,8 @@
 #!/bin/sh
 
+
 axis="../setAxisTitle.plt"
+
 if [ $2 = time ]; then
   title="Time complexity of operations of List"
 else
