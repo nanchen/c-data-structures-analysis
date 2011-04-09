@@ -672,7 +672,7 @@ void Resource_writeTableData(const char* tableName) {
         fclose(allInOneFile);
     }
 	allInOneFile = fopen(ALL_FILE_PATH, "a+");
-	const char* TABLE_HEADER = "Operation\tEmpirical time\tTime RSD\tAnalytical time\tComparision\tEmpirical space\tSpace RSD\tAnalytical space\tComparision\n";
+	const char* TABLE_HEADER = "Operation\tEmpirical time\tTime RSD\tAnalytical time\tEmpirical space\tSpace RSD\tAnalytical space\n";
 	if(!allFileExist)
         fputs(TABLE_HEADER, allInOneFile);
 
@@ -695,7 +695,7 @@ void Resource_writeTableData(const char* tableName) {
 		}
 		strcat(data, "\t ");
 		strcat(data, *(funcArr + 3));
-		strcat(data, "\tEQUAL");
+	//	strcat(data, "\tEQUAL");
 		// space
 		strcat(data, " \tSpace(N) = ");
 		char** funcSpaceArr = getFunctionInfo(op->spaceComplexity,
@@ -710,7 +710,7 @@ void Resource_writeTableData(const char* tableName) {
 		}
 		strcat(data, "\t ");
 		strcat(data, *(funcSpaceArr + 3));
-		strcat(data, "\tEQUAL");
+	//	strcat(data, "\tEQUAL");
 
 		strcat(data, "\n");
 	}

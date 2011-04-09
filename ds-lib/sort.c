@@ -74,7 +74,7 @@ void Swap(ElementType *Lhs, ElementType *Rhs) {
 void insertionSort(ElementType A[], int N) {
 	//--------------space------------------------------
 	const int SPACE = sizeof(ElementType) + sizeof(int);
-	Resource_logSpace(SPACE);
+	Resource_logSpace(SPACE); // log the stack space
 	//--------------space------end---------------------
 
 	int j, P; // time = 2
@@ -89,8 +89,8 @@ void insertionSort(ElementType A[], int N) {
 		A[j] = Tmp; // time = 2
 		Resource_logTime(7);
 	}
-	Resource_logTime(5);
-	Resource_logSpace(-SPACE);
+	Resource_logTime(5); // log the time in this basic block
+	Resource_logSpace(-SPACE); //free the stack space when returning
 }
 /* END */
 
@@ -432,6 +432,7 @@ void reverseCopy(ElementType lhs[], const ElementType rhs[], int n) {
 int Arr1[MaxSize];
 int Arr2[MaxSize];
 int arr3[MaxSize];
+int reverseSortedArr[MaxSize];
 
 void Sort_test() {
 	int START = 10;
@@ -445,11 +446,16 @@ void Sort_test() {
 	//	printArray(array,10);
 	//	radixExchangeSort(array, 2, 0, 9);
 
+    Permute(Arr2, MaxSize);
+    Copy(Arr1, Arr2, END);
+    insertionSort(Arr1, END);
+	reverseCopy(arr3, Arr1, END);
+	printArray(arr3, END);
 
 	Resource_initilizeOperationArray();
 
-	Permute(Arr2, MaxSize);
-	Resource_startTrack("sort", "insertion-sort-average-case");
+    //--------insertion----------------
+	Resource_startTrack("sort", "insertion-sort-(average-case)");
 	for (i = START; i <= END; i += STEP) {
 		Copy(Arr1, Arr2, i);
 		Resource_clearData();
@@ -458,7 +464,7 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("sort", "insertion-sort-best-case");
+	Resource_startTrack("sort", "insertion-sort-(best-case)");
 	for (i = START; i <= END; i += STEP) {
 		Resource_clearData();
 		insertionSort(Arr1, i);
@@ -466,20 +472,23 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("sort", "insertion-sort-worst-case");
+	Resource_startTrack("sort", "insertion-sort-(worst-case)");
 	for (i = START; i <= END; i += STEP) {
-		reverseCopy(arr3, Arr1, i);
+		Copy(reverseSortedArr, arr3, i);
 		Resource_clearData();
-		insertionSort(arr3, i);
+		insertionSort(reverseSortedArr, i);
 		Resource_storeData(i);
 	}
 	Resource_analyseSequence();
 
+/*
 	START = 200;
 	END = MaxSize;
 	STEP = 200;
+*/
 
-	Resource_startTrack("sort", "heap-sort");
+    // ----------heap---------------
+	Resource_startTrack("sort", "heap-sort-(average-case)");
 	for (i = START; i <= END; i += STEP) {
 		Copy(Arr1, Arr2, i);
 		Resource_clearData();
@@ -488,7 +497,8 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("sort", "merge-sort");
+    //----------------merge-------------------
+	Resource_startTrack("sort", "merge-sort-(average-case)");
 	for (i = START; i <= END; i += STEP) {
 		Copy(Arr1, Arr2, i);
 		Resource_clearData();
@@ -497,7 +507,8 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-	Resource_startTrack("sort", "quick-sort");
+    //-------------quick-------------
+	Resource_startTrack("sort", "quick-sort-(average-case)");
 	for (i = START; i <= END; i += STEP) {
 		Copy(Arr1, Arr2, i);
 		Resource_clearData();
@@ -506,8 +517,9 @@ void Sort_test() {
 	}
 	Resource_analyseSequence();
 
-	//    Resource_setMode(1);
-	Resource_startTrack("sort", "shell-sort");
+    //----------------shell----------------
+		//    Resource_setMode(1);
+	Resource_startTrack("sort", "shell-sort-(average-case)");
 	for (i = START; i <= END; i += STEP) {
 		Copy(Arr1, Arr2, i);
 		Resource_clearData();
@@ -515,36 +527,47 @@ void Sort_test() {
 		Resource_storeData(i);
 	}
 	Resource_analyseSequence();
-	Resource_setMode(0);
+//	Resource_setMode(0);
+
 
 	// --------------Time------------------
-	char* list0[] = { "insertion-sort-average-case",
-			"insertion-sort-worst-case" };
-	Resource_writePlotScript("quadratic", list0, 2, 0, 0);
+	char* insert[] = { "insertion-sort-(average-case)",
+			"insertion-sort-(worst-case)" };
+	Resource_writePlotScript("insertion", insert, 2, 0, 0);
 
-	char* list1[] = { "insertion-sort-best-case" };
-	Resource_writePlotScript("insertion-best", list1, 1, 0, 0);
+	char* insertBest[] = { "insertion-sort-(best-case)" };
+	Resource_writePlotScript("insertion-best", insertBest, 1, 0, 0);
 
-	char* time2[] = { "shell-sort" };
-	Resource_writePlotScript("shell-sort", time2, 1, 0, 0);
+    char* heap[] = {"heap-sort-(average-case)"};
+    Resource_writePlotScript("heap",heap, 1,0,0);
 
-	char* time3[] = { "quick-sort" };
-	Resource_writePlotScript("quick-sort", time3, 1, 0, 0);
+    char* merge[] = {"merge-sort-(average-case)"};
+    Resource_writePlotScript("merge", merge, 1, 0, 0);
+
+	char* quick[] = { "quick-sort-(average-case)" };
+	Resource_writePlotScript("quick", quick, 1, 0, 0);
+
+	char* shell[] = { "shell-sort-(average-case)"};
+	Resource_writePlotScript("shell", shell, 1, 0, 0);
+
+	char* hmq[] = {"heap-sort-(average-case)","merge-sort-(average-case)","quick-sort-(average-case)"};
+	Resource_writePlotScript("nlogn",hmq, 3, 0, 0);
+
 
 	//---------------space----------------
 	char* list2[] =
-			{ "insertion-sort-average-case", "heap-sort", "shell-sort" };
+			{ "insertion-sort-(average-case)", "heap-sort-(average-case)", "shell-sort-(average-case)" };
 	Resource_writePlotScript("constant", list2, 3, 1, 0);
 
-	char* space1[] = { "quick-sort" };
-	Resource_writePlotScript("quick-sort", space1, 1, 1, 0);
-	Resource_writePlotScript("quick-sort", space1, 1, 1, 1);
+	char* space1[] = { "quick-sort-(average-case)" };
+	Resource_writePlotScript("quick", space1, 1, 1, 0);
+	Resource_writePlotScript("quick", space1, 1, 1, 1);
 
-	char* space2[] = { "merge-sort" };
-	Resource_writePlotScript("merge-sort", space2, 1, 1, 0);
+	char* space2[] = { "merge-sort-(average-case)" };
+	Resource_writePlotScript("merge", space2, 1, 1, 0);
 
-	char* space3[] = { "shell-sort" };
-	Resource_writePlotScript("shell-sort", space3, 1, 1, 0);
+	char* space3[] = { "shell-sort-(average-case)" };
+	Resource_writePlotScript("shell", space3, 1, 1, 0);
 
 	Resource_writeTableData("Sort");
 

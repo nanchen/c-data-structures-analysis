@@ -28,11 +28,12 @@ void AVLTree_testPerformance(){
 
     Resource_initilizeOperationArray();
 
-    Resource_startTrack("avltree","insert-average-case");
+    Resource_startTrack("avltree","insert");
 	for(i=START;i<END;i+=STEP){
         AvlTree tree = createTestTree(i);
+        //int ret = AVLTree_retrieve(AVLTree_findMax(tree));
         Resource_clearData();
-        tree = AVLTree_insert( data[i], tree);
+        tree = AVLTree_insert(data[i], tree);
         Resource_storeData(i);
         AVLTree_makeEmpty(tree);
 	}
@@ -51,7 +52,7 @@ void AVLTree_testPerformance(){
 	for(i=START;i<END;i+=STEP){
         AvlTree tree = createTestTree(i);
         Resource_clearData();
-        AVLTree_find( data[i-1], tree);
+        AVLTree_find( data[i], tree);
         Resource_storeData(i);
         AVLTree_makeEmpty(tree);
 	}
@@ -93,12 +94,14 @@ void AVLTree_testPerformance(){
 	Resource_analyseSequence();
 
     // --------------Time------------------
-    char* time0[] = {"insert-average-case"};
+    char* time0[] = {"insert"};
     Resource_writePlotScript("insert",time0,1,0,1);
     char* time1[] = {"make-empty"};
     Resource_writePlotScript("make-empty",time1,1,0,0);
-    char* time2[] = {"find" ,"find-min","find-max"};
-    Resource_writePlotScript("find",time2,3,0,1);
+    char* find[] = {"find"};
+    Resource_writePlotScript("find",find,1,0,1);
+    char* time2[] = {"find-min","find-max"};
+    Resource_writePlotScript("find-min-max",time2,2,0,1);
     char* time3[] = {"retrieve"};
     Resource_writePlotScript("retrieve",time3,1,0,0);
 
