@@ -5,7 +5,7 @@
 		<Cursor position="3785" topLine="130" />
 	</File>
 	<File name="ds-lib/avltree.c" open="0" top="0" tabpos="2">
-		<Cursor position="4453" topLine="172" />
+		<Cursor position="4453" topLine="192" />
 	</File>
 	<File name="ds-lib/avltree.h" open="0" top="0" tabpos="0">
 		<Cursor position="224" topLine="0" />
@@ -32,7 +32,7 @@
 		<Cursor position="250" topLine="0" />
 	</File>
 	<File name="ds-lib/list.c" open="0" top="0" tabpos="2">
-		<Cursor position="158" topLine="0" />
+		<Cursor position="7198" topLine="228" />
 	</File>
 	<File name="ds-lib/list.h" open="0" top="0" tabpos="4">
 		<Cursor position="496" topLine="0" />
@@ -46,14 +46,14 @@
 	<File name="ds-lib/redblack.c" open="0" top="0" tabpos="0">
 		<Cursor position="5648" topLine="200" />
 	</File>
-	<File name="ds-lib/resourcetrack.c" open="0" top="0" tabpos="3">
-		<Cursor position="17967" topLine="666" />
+	<File name="ds-lib/resourcetrack.c" open="1" top="0" tabpos="2">
+		<Cursor position="3270" topLine="262" />
 	</File>
 	<File name="ds-lib/resourcetrack.h" open="0" top="0" tabpos="4">
-		<Cursor position="1130" topLine="22" />
+		<Cursor position="1109" topLine="29" />
 	</File>
-	<File name="ds-lib/sort.c" open="0" top="0" tabpos="5">
-		<Cursor position="6157" topLine="246" />
+	<File name="ds-lib/sort.c" open="1" top="1" tabpos="1">
+		<Cursor position="1799" topLine="57" />
 	</File>
 	<File name="ds-lib/sort.h" open="0" top="0" tabpos="2">
 		<Cursor position="100" topLine="0" />
@@ -62,7 +62,7 @@
 		<Cursor position="2356" topLine="95" />
 	</File>
 	<File name="ds-lib/testavl.c" open="0" top="0" tabpos="2">
-		<Cursor position="2337" topLine="77" />
+		<Cursor position="306" topLine="98" />
 	</File>
 	<File name="ds-lib/testavl.h" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
@@ -77,7 +77,7 @@
 		<Cursor position="83" topLine="0" />
 	</File>
 	<File name="ds-lib/testlist.c" open="0" top="0" tabpos="2">
-		<Cursor position="4759" topLine="164" />
+		<Cursor position="519" topLine="186" />
 	</File>
 	<File name="ds-lib/testque.c" open="0" top="0" tabpos="0">
 		<Cursor position="401" topLine="2" />
@@ -107,6 +107,6 @@
 		<Cursor position="101" topLine="0" />
 	</File>
 	<File name="src/main.c" open="0" top="0" tabpos="1">
-		<Cursor position="514" topLine="9" />
+		<Cursor position="557" topLine="21" />
 	</File>
 </CodeBlocks_layout_file>
