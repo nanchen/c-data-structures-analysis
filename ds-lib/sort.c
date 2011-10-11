@@ -527,6 +527,16 @@ void Sort_test() {
 		Resource_storeData(i);
 	}
 	Resource_analyseSequence();
+
+	Resource_startTrack("sort", "shell-sort-(worst-case)");
+	for (i = 2; i <= 16384; i*=2) {
+		Copy(Arr1, Arr2, i);
+		Resource_clearData();
+		shellsort(Arr1, i);
+		Resource_storeData(i);
+	}
+	Resource_analyseSequence();
+
 //	Resource_setMode(0);
 
 

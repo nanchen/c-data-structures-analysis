@@ -29,14 +29,14 @@ int main(void) {
 	st_time = times(&st_cpu);
 */
 
-	printf("-----------------Test List-------------------\n");
-	List_test();
+//	printf("-----------------Test List-------------------\n");
+//	List_test();
 
     printf("-----------------Test Sorting------------------\n");
 	Sort_test();
 
-	printf("-----------------Test AVL Tree-------------------\n");
-	AVLTree_testPerformance();
+//	printf("-----------------Test AVL Tree-------------------\n");
+//	AVLTree_testPerformance();
 
 
 //	printf("-----------------Test Tree-------------------\n");
